@@ -40,10 +40,13 @@ function  changeText(){
 
      ann_func = function (){
 
+        let x = 99;
+
         console.log("Annonymous changed..")
 
      }
 
+       
 
      ann_func();
 

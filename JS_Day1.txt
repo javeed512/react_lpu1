@@ -1,0 +1,63 @@
+JS is a Scripting Language use for creating Dynamic Web Applications.
+It is also used in desktop and web application development.
+It is compatible with all platforms and technologies.
+Ex: Java, .Net , C , C++ , Android , IOS ....
+
+JS has copied some of the features of Java Lang like
+Non-PDTs
+--------
+String object
+Array Object
+Number Object
+Date Object
+
+Ex:  var  x =  new String("Gulabchand");
+     var num =  new Number(999);
+
+
+
+Declaring Variables in JS:
+PDTs
+----
+var  n1 = 100; // number
+     n1 = true  // boolean
+     n1 = "Javeed" // string	
+
+
+<form  action=""  method=""  >
+<input type="text">
+
+</form>
+
+
+
+
+Types of Applications:
+-------------------------
+1. Standalone / Desktop Application
+Ex: Notepad, Paint , MS-office, VSCODE, O.S
+
+2. Web Applications
+We need any web server to deploy or run web application ,
+which can be access by multiple users through browsers.
+Ex: Facebook , Google , Flipkart , any website
+
+3. Mobile Apps
+ Standalone or Web Application
+
+
+Types of functions in JS:
+-------------------------
+
+1.Normal functions
+2. annonymous functions
+3. arrow functions
+
+
+
+
+
+
+
+
+
