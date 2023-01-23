@@ -1,0 +1,359 @@
+What is JSX
+=============
+JSX stands for JavaScript XML.
+
+JSX allows us to write HTML in React.
+
+JSX tags having a tagname, attributes and children.
+
+JSX is not a necessity to write React applications.Instead we can use Babel.
+
+JSX makes your react code simpler and elegant.
+
+JSX ultimately transpiles to pure JavaScript which is understood by the browsers.
+
+App.js
+--------
+function  App(){
+
+	let id = 100;	
+	console.log("hello");
+
+		<h1>Hello World! </h1> // invalid or error in Javascript
+	
+
+} 
+
+
+
+
+JSX Elements
+===============
+JSX allows us to write HTML elements in JavaScript and place them in the DOM without any createElement()  and/or appendChild() methods.
+
+
+ex:1
+-----
+
+JSX code
+--------
+	<h1>IHUB Talent</h1>  
+
+	Here h1 is a jsx element.
+
+Babel code
+------------
+        React.createElement("h1",null,"IHUB Talent");
+ 
+	Here h1 is a tag name.
+	Here null is a optional property name.
+	Here IHUB Talent is a text.
+
+	
+
+ex:2
+------
+
+JSX code
+---------
+	<div>
+		<h1>Hello React JS </h1> 
+	</div>
+
+babel code
+---------
+ 	React.createElement("div",null,
+			React.creteElement("h1",null,"Hello ReactJs"));
+
+
+ex:3
+---------
+
+JSX code
+---------
+	<div id="myId">
+		<h1>Hello React JS </h1> 
+	</div>
+
+babel code
+---------
+ 	React.createElement("div",{id:'myId'},
+			React.creteElement("h1",null,"Hello ReactJs"));
+
+
+ex:4
+---------
+
+JSX code
+---------
+	<div class="myClass">
+		<h1>Hello React JS </h1> 
+	</div>
+
+babel code
+---------
+ 	React.createElement("div",{class:'myClass'},
+			React.creteElement("h1",null,"Hello ReactJs"));
+
+
+Note:
+-------
+	In above code , warning message will be displayed on console i.e Invalid DOM property
+	'class'.
+
+	In order to remove this warning from our application we need to use "className" attribute.
+
+	In javascript, "class" is a keyword which is used to create React components.
+
+	In react , CSS class name must specify by "className" attribute.  
+	
+
+ex:5
+--------
+
+JSX code
+---------
+	<div id="myId" class="myClass">
+		<h1>Hello React JS </h1> 
+	</div>
+
+babel code
+---------
+ 	React.createElement("div",{id:'myId',className:'myClass'},
+			React.creteElement("h1",null,"Hello ReactJs"));
+
+
+
+JSX Expressions
+=======================
+JSX allows us to write expressions inside curly braces { }.
+
+The expression can be a React variable, or property, or any other valid JavaScript expression.
+
+JSX will execute the expression and return the result.
+
+ex:1
+----
+	let name="Alan Morries";
+
+	<h1>My Name is {name}</h1>
+
+
+ex:2
+----
+	<h1>The value is = {5+5} </h1>
+
+ex:3
+----
+	<h1>{Math.random()*100}</h1>
+	
+ex:4
+------
+	<h1>{Math.floor(Math.random()*100)}</h1>
+
+
+Note:
+------
+	we can't use conditional statements like if, while and etc inside JSX expression.
+
+
+
+Inserting a Single and Large Block of HTML
+================================
+ex:1
+-------
+  const ele= <h1>IHUB Talent</h1>	
+  	
+
+To write HTML on multiple lines, put the HTML inside parentheses.
+
+ex:2
+------
+const myElement = (
+  			<ul>
+    				<li>Apples</li>
+    				<li>Bananas</li>
+    				<li>Cherries</li>
+  			</ul>
+		);
+
+
+
+What is NPM?
+===============
+
+A npm stands for Node Packaging Manager.
+
+It is a integrated tool for NodeJS.
+
+It is used to download React Modules/packages/dependencies.
+
+We can use following command to download module/package/dependecy as given below.
+ex:
+	cmd> npm  install  package_name/module_name/dependency_name
+
+All Modules/packages/dependencies will store in a folder called "node_modules". 
+
+
+Environmental setup for NPM 
+=============================
+
+step1:
+------
+	Install NodeJs software.
+	ex:
+	http://nodejs.org/en/download
+
+step2:
+----
+	Add nodejs directory in path environmental variables.
+	ex:
+	C:\Program Files\nodejs;
+
+	Right click to my computer --> properties -->
+	advanced system settings --> environmental variables -->
+
+	system variables --> click to new button  -->
+
+	variable Name : path
+
+	variable value : C:\Program Files\nodejs; -->ok -->ok --> ok.
+	
+
+step3:
+-----
+	Open command prompt and type below command.
+	ex:
+		node -v
+		npm -v
+
+
+
+First Application development using ReactJS
+===========================================
+step1:
+-------
+	Make sure Nodejs software installed successfully.
+
+step2:
+-------
+	Make sure Visual Studio code or other editors like Atom,sublime and 	etc are installed in your computer.
+
+step3:
+-------
+	Make sure nodejs directory added in Path evivornmental variables.
+
+step4:
+-------
+	create a  "ReactProjects" folder inside any drive.
+
+step5:
+------
+	Open a command prompt from that folder and type below command to download all the modules of React.
+
+	ex:
+   		E:/ReactProjects>  npm install -g create-react-app 
+
+step6:
+---------
+	check the React Version.
+	ex:
+		E:/ReactProjects> create-react-app  --version
+
+
+step7:
+---------
+	Develop React First Application.
+	ex:
+		E:/ReactProjects> create-react-app myapp1
+
+Note:
+-----
+	Project name must contains only lower case letters.
+	
+
+step8:
+--------
+	Open a Project in Visual Studio code using command prompt.
+	ex:
+		E:/ReactProjects> code .
+
+step9
+-----
+	Move or swift to the myapp1 project in command prompt.
+	ex:
+		E:ReactProjects>cd myapp1
+		
+
+step10
+-------
+	Run the React Application.
+	ex:
+		E:/ReactProjects/myapp1>npm start
+
+step11:
+--------
+	To see the out we can type below request url.
+	ex:
+		http://localhost:3000
+
+ Note:
+--------
+	Bydefault ReactJS application run in light weight development server under the port number 	3000.
+
+
+step12:
+--------
+	Open App.js file from "myapp1/src" folder.
+
+	App.js
+	------
+	-
+	-	
+	-
+ 		Learn React from IHUB Talent
+	-
+	-
+	-
+
+
+
+
+
+
+
+
+function App(){
+
+
+
+	return x;	
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

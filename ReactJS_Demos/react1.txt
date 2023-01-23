@@ -1,0 +1,121 @@
+What is ReactJS
+================
+ReactJS is a Declarative , efficient and flexible JavaScript Library
+for building Front End applications or User Interfaces(UI).
+
+It is an open source,component based frontend library responsible
+only for view layer of the application(UI).
+
+It was created by Jordan Walke,who was a software engineer at Facebook.
+
+It was intially developed and maintained by Facebook .later is
+used in its products like watsapp and Instagram.
+
+ReactJS was released to the public in the month of May 2013.
+
+The current version of ReactJS is 18.1.0 (April, 2022).
+
+ReactJS allows us to create reusable UI components which makes ReactJS Better and useful.
+
+Component is a building block of any ReactJS application.
+ex:
+	http://reactjs.org
+
+
+Advantages of ReactJS
+=======================
+1)It is easy to learn and easy to use.
+
+2)Supports One way Data Binding.
+
+2)Supports Virtual DOM.
+
+3)We can create Reusable components.
+
+5)It works In All Browsers.
+
+6)Large Community support.
+
+
+
+Q)Difference between Angular and React ?
+
+Angular							React
+==========						==========
+Angular was released in October, 2010.			React was released in May, 2013.
+						
+Angular is product of Google.				React is a product of Facebook(Meta).
+
+Angular is a open-source javascript framework		React is a front-end javascript library
+for web and mobile development.				for building user interfaces.
+
+In Angular Typescript language is used.			In React JSX(JavaScript XML) Language is used.	
+
+Angular uses traditional DOM that updates the 		React uses virtual DOM that puts less 	
+whole web page even if a single element changes.	load on the browser.
+
+It supports two way data binding.			It supports one way data binding.
+
+Jasmine and Karma used as a testing framework.		Cypress ,Jest and Enzyme used as a testing framework.
+
+It is used for large scale and rich featured		It is used for Single Page Web application. 
+application.
+
+Angular is used by Google,Apple, Nike , McDonald's	React is used by Facebook 
+and etc.						Twitter,Netflix,Airbnb and etc.
+
+
+
+
+How React works
+==================
+React uses a virtual DOM that is basically a DOM tree representation in JavaScript. So when it needs to read or write to the DOM, it will use the virtual representation of it. Then the virtual DOM will try to find the most efficient way to update the browser's DOM.
+
+
+Diagram: react1.1
+
+
+Assume we have created multiple components and consistently we are performing some changes 
+in our application.
+
+Now we need to see ,how virtual DOM react on each change.
+ 
+Diagram: react1.2
+
+If we change the content from "Hello World" to "IHUB Talent" then
+ReactJS will create a new Virtual DOM and it compares with Old Virtual DOM.
+
+If new Virtual DOM having some modifications then new output will be 
+rendered/displayed on a particular component.
+
+
+
+Prerequisite to Learn ReactJS
+===============================
+> Basic knowledge of HTML , CSS , JavaScript and Bootstrap.
+
+> Fundamentals of ES6 Features.
+
+> Basic usage of npm command.
+
+> Strong knowledge on JSX.
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
