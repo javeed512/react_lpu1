@@ -1,0 +1,395 @@
+Components
+==========
+Components are Building blocks of any React app.
+
+Component allows us to split UI into independent reusable pieces.
+ex:
+	navbar, header, footer , body and etc.
+
+Components are like Javascript functions.They accept arbitrary inputs called "props" and 
+return React Element describing what should appears on the screen.
+
+A Component name always starts with capital letter.
+
+ex:
+	 <div> represent as HTML div tag.
+	 But <Div> represent a component in react.
+
+we can create react component in two ways.
+
+1)Function Component /functional component
+
+2)Class Component
+
+
+1)Function Component
+========================
+It is a Javascript function which accept single "props" object as argument
+with data and returns a React Element.
+
+The functional component is also known as a stateless component because they do not hold or manage state.
+
+syntax
+---------
+function function_name()
+{
+
+	return element;
+}
+
+
+Project Directory structure
+============================
+myapp3
+|
+|----node_modules
+|
+|----public
+|	|
+|	|---favicon.ico
+|	|---index.html (3)
+|	|---manifest.json
+|	|
+|	
+|-----src
+|	|	
+|	|---index.js   (2)
+|	|---Student.js (1)
+|	|
+|---package.json
+|---README.md
+
+step1:
+-----
+	Develop React Application 
+	ex:
+	E:/BUI-2pm/ReactProjects>create-react-app  myapp3
+
+step2:
+--------
+	Delete all the starting 6 files from src folder.
+
+step3:
+------
+	create a Student.js file in src folder to develop a function component.
+
+Student.js
+----------
+function Student()
+{
+  return <h1>Function Component Example</h1>
+}
+export default Student;
+
+
+Note:
+-----
+Above code is applicable for older versions and for lastest versions  like ES6 ,we use below code.
+ex:
+
+Student.js
+--------
+const Student=()=>{
+    return <h1>Function Component Example</h1>
+}
+export default Student;
+
+
+step4:
+--------
+create "index.js" file to render the component to index.html file.
+
+index.js
+----------
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrickMode>	
+      <Student/>
+      </React.StrickMode>
+)
+
+
+step5:
+-------
+	move to myapp3
+	ex:
+		cmd/ReactProjects>cd myapp3
+
+step6:
+-----
+	Run the Application
+	ex:
+		cmd/myapp3> npm start
+
+step7:
+-----
+	Test the Application.
+	ex:
+		http://localhost:3000
+
+
+
+
+Function component with props
+===============================
+In order to use props in a component We need to perform following changes in react "myapp3" project.
+
+syntax
+--------
+function fun_name(props)
+{
+	return React Element
+}
+
+
+ex:1
+------
+
+Student.js
+---------
+function Student(props)
+{
+  return <h1>Hello {props.name}</h1>
+}
+
+export default Student;
+
+or
+
+Student.js
+-------
+const Student=(props)=>
+{
+  return <h1>Hello {props.name}</h1>
+}
+
+export default Student;
+
+
+Rendering the Component
+-----------------------
+we can render the component in index.js file as given below.
+
+index.js
+-----------
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrickMode>	
+      <Student name="Alan"/>
+      </React.StrickMode>
+)
+
+
+
+
+
+ex2:
+------
+
+Student.js
+----------
+const Student=(props)=>
+{
+  return (
+          <>
+          <h1>First Name : {props.firstName}</h1>
+          <h1>Second Name: {props.lastName}</h1>
+          </>
+  )
+}
+export default Student;
+
+
+
+index.js
+----------
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(     
+      <React.StrickMode>	
+      	<Student firstName="Alan" lastName="Morries"/>
+      </React.StrickMode>	
+)
+
+
+
+
+2)Class Component
+====================
+A class Component requires to extends from React Component.
+
+The class must implements a render() method function which returns A react
+Element to be render.This is Similar to return value of a functional 
+component.
+
+In a class based component props are accessible via this.props.
+
+The class component is also known as a stateful component because they can hold or manage local state.
+
+
+syntax
+-------
+class Class_name extends Component
+{
+	render()
+	{
+		return element.
+	}
+}
+
+Project  structure
+--------------------
+myapp4
+|
+|------node-modules
+|
+|------public
+|	|
+|	|------favicon.ico
+|	|------index.html (3)
+|	|------manifest.json
+|
+|------src
+	|
+	|------index.js(2)
+	|------Student.js (1)
+|	|
+|
+|------package.json
+|------README.md
+
+step1:
+------
+	Develop React Application.
+	ex:
+		cmd/ReactProjects>create-react-app  myapp4
+
+step2:
+------
+	Delete all the files from src folder.
+
+step3:
+------
+	create a "Student.js" file in "src " folder.
+	
+Student.js
+---------
+import { Component } from "react";
+export default class Student extends Component
+{
+  render()
+  {
+    return <h1>First Class Component</h1>
+  }
+}
+
+
+
+
+step4:
+-----
+	create "index.js" file to render the output to index.html file.
+
+index.js
+---------
+
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student />
+      </React.StrictMode>
+)
+
+
+step5:
+-----
+	move to myapp4
+	ex:
+		cmd/ReactProjects> cd myapp4
+
+step6:
+-----
+	Run the application.
+	ex:
+		cmd/ReactProjects/myapp4>npm start
+
+step7:
+-------
+	Test the React Application.
+	ex:
+		http://localhost:3000
+
+
+
+Class component with props
+==============================
+In order to use props in a class component we need to perform following changes.
+
+Student.js
+------------
+import { Component } from "react";
+export default class Student extends Component
+{
+  render()
+  {
+    return <h1>Name : {this.props.name}</h1>
+  }
+}
+
+
+index.js
+----------
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student name="Kelvin"/>
+      </React.StrictMode>
+    
+)
+
+
+Note:
+----------
+To perform shortcuts in VSC editor we need to download below extension.
+
+Extension :
+	    ES7+ React/Redux/React-Native
+
+ex:
+	imr
+	imrd
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

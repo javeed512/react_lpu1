@@ -1,0 +1,899 @@
+Typechecking with propTypes in ReactJS
+======================================
+To run Typechecking on the props for a component we can assign the 
+special "propTypes" property.
+
+ex:
+import PropTypes from "prop-types";
+
+Student.propTypes={
+	name: PropTypes.string
+	}
+
+In general , Using PropTypes we can check the datatype of a component
+attribute which goes to props object.
+
+When an invalid value is provided for a props , a warning will be shown
+in the javascript console.
+
+For performance reason ,PropTypes is only checked in Development mode.
+But we can use in production mode also.
+
+
+PropTypes export a range of validators that can be use to make sure the 
+data we receive is valid.
+
+ex:
+	optionalArray: PropTypes.Array
+	optionalBool: PropTypes.bool
+	optionalFunc: PropTypes.func
+	optionalNumber: PropTypes.number
+	optionalObject : PropTypes.object
+	optionalString : PropTypes.string
+	optionalSymbol : PropTypes.symbol
+
+ex:
+Project  structure
+--------------------
+myapp7
+|
+|------node-modules
+|
+|------public
+|	|
+|	|------favicon.ico
+|	|------index.html 
+|	|------manifest.json
+|
+|------src
+	|
+	|------index.js
+	|------App.js
+	|------Student.js 
+|
+|------package.json
+|------README.md
+
+step1:
+------
+	Develop React Application.
+	ex:
+	E:/BUI-2pm/ReactProjects>create-react-app  myapp7
+
+step2:
+------
+	Delete all starting 6 files from src folder.
+
+step3:
+------
+	Install propTypes in a "myapp7" project.
+	ex:
+	E:/BUI-2pm/ReactProjects/myapp7> npm install prop-types
+	or
+
+	Add prop-types to package.json file.
+	ex:
+	"prop-types" :"^15.7.2"
+
+step4:
+----
+	create a "Student.js" file in "src " folder.
+	
+Student.js
+---------
+import PropTypes from 'prop-types';
+
+function Student(props)
+{
+    return 
+            <>
+                <h1>Name : {props.name}</h1>
+                <h1>Roll No : {props.rollno}</h1>
+            </>
+}
+Student.propTypes={
+    name:PropTypes.string,
+    rollno:PropTypes.number
+}
+export default Student;
+
+or
+
+import React,{Component} from "react";
+import PropTypes from "prop-types";
+class Student extends Component
+{
+	render()
+	{
+		return (
+			<div>
+			<h1>Name :{this.props.name}</h1>
+			<h1>RollNo :{this.props.rollno}</h1>
+			</div>
+			)
+        }
+    }//after class
+
+Student.propTypes ={
+        name: PropTypes.string,
+        rollno: PropTypes.number
+}
+export default Student;
+
+
+
+
+step:5
+--------
+	create App.js file to call <Student> component.
+
+App.js
+--------
+import Student from "./Student";
+import styled from 'styled-components';  
+function App(props)
+{
+  return <>
+            <Student name="Alan" rollno="101"/>
+	    <Student name="Alan" rollno={101}/>	
+          </>
+}
+export default App;
+
+
+step6:
+-------
+	create "index.js" file to render the output to index.html file.
+
+index.js
+---------
+import App from './App';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <App/>
+      </React.StrictMode>
+)
+
+step7:
+-----
+	move to myapp7
+	ex:
+		E:/BUI-2pm/ReactProjects> cd myapp7
+
+step8:
+-----
+	Run the application.
+	ex:
+		DE:/BUI-2pm/ReactProjects/myapp7>npm start
+
+step9:
+-------
+	Test the React Application.
+	ex:
+		http://localhost:3000
+
+
+
+required
+==========
+It shows warning message on a browser console if we won't pass any props
+which is required for React component.
+
+ex:
+Student.js
+----------
+import React,{Component} from "react";
+import PropTypes from "prop-types";
+class Student extends Component
+{
+	render()
+	{
+		return (
+			<div>
+			<h1>Name :{this.props.name}</h1>
+			<h1>RollNo :{this.props.rollno}</h1>
+			</div>
+			)
+        }
+    }//after class
+
+Student.propTypes ={
+        name: PropTypes.string.isRequired,
+        rollno: PropTypes.number.isRequired
+}
+export default Student;
+
+App.js
+----------
+import Student from "./Student";
+import styled from 'styled-components';  
+function App(props)
+{
+  return <>
+            <Student  />
+          </>
+}
+export default App;
+
+Note: Once we exclude JSX attributes i.e name or rollno then we will see warning message on console.
+
+index.js
+--------
+import App from './App';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <App/>
+      </React.StrictMode>    
+)
+
+
+Default props values
+====================
+We can define default values for your props by assigning to the special
+defaultProps property.
+
+ex:
+
+Student.defaultProps={
+		name:"Ihub Talent",
+		roll: 404
+	}
+
+
+ex:1
+---
+
+Student.js
+----------
+import React,{Component} from "react";
+import PropTypes from "prop-types";
+class Student extends Component
+{
+	render()
+	{
+		return (
+			<div>
+			<h1>Name :{this.props.name}</h1>
+			<h1>RollNo :{this.props.rollno}</h1>
+			</div>
+			)
+        }
+    }//after class
+
+Student.propTypes ={
+        name: PropTypes.string.isRequired,
+        rollno: PropTypes.number.isRequired
+}
+Student.defaultProps={
+    name:"IHUB Talent",
+    rollno: 404
+}
+export default Student;
+
+App.js
+---------
+import Student from "./Student";
+import styled from 'styled-components';  
+function App(props)
+{
+  return <>
+            <Student  />
+          </>
+}
+export default App;
+
+Note:
+------
+defaultProps property works only when we won't pass any attribute to props.
+
+
+index.js
+----------
+import App from './App';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <App/>
+      </React.StrictMode>
+    
+)
+
+
+
+Children in JSX
+==================
+In JSX expression that contains both an opening and closing tags ,the
+content between those tags is passes a special props called props.children.
+ex:
+	<Student>My Content</Student>
+	
+	props.children   //My Content
+ex:
+Student.js
+-----------
+import React,{Component} from "react";
+import PropTypes from "prop-types";
+class Student extends Component
+{
+	render()
+	{
+		return (
+			<div>
+			<h1>Name :{this.props.children}</h1>
+			</div>
+			)
+        }
+    }//after class
+
+export default Student;
+
+App.js
+---------
+import Student from "./Student";
+import styled from 'styled-components';  
+function App(props)
+{
+  return <>
+            <Student>This is IHUB</Student>
+          </>
+}
+export default App;
+
+
+index.js
+--------
+import App from './App';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <App/>
+      </React.StrictMode>
+    
+)
+
+
+
+
+State
+=======
+State is similar to props but it is a private and fully controlled by 
+the component.
+
+we can create a state only in class component but not in functional 
+component.
+
+It is possible to update the state or modify the state , where as props 
+only for read only.
+
+There are two ways to initialize the state in React component.
+
+1)Directly inside class
+
+2)Inside the Constructor
+
+
+1)Directly inside class
+==========================
+class Student extends Component
+{
+	//define state
+	state={
+		name: "Anna Julie",
+		prop1: this.props.prop1
+	}	
+	render()
+	{
+		-
+	}
+}
+Note:
+-------
+	The "state" property is refered as state.
+	"this" is a class instance property
+
+example
+---------
+
+Project  structure
+--------------------
+myapp8
+|
+|------node-modules
+|
+|------public
+|	|
+|	|------favicon.ico
+|	|------index.html 
+|	|------manifest.json
+|
+|------src
+	|
+	|------index.js
+	|------Student.js 
+|
+|------package.json
+|------README.md
+
+step1:
+------
+	Develop React Application.
+	ex:
+	E:/BUI-2pm/ReactProjects>create-react-app  myapp8
+
+step2:
+------
+	Delete all starting 6 files from src folder.
+
+step3:
+------
+	Install "ES7 React " Plugin/Extension from Visual Studio Code
+	for shortcuts to create React Applications.
+	ex:
+	imr +tab 
+	imrc + tab
+	imrd + tab
+	imp + tab
+	conlg+ tab
+
+step4:
+----
+	create a "Student.js" file in "src " folder (rcc).
+	
+Student.js
+---------
+import React, { Component } from 'react'
+
+export default class Student extends Component {
+		state={
+			name:"Alan"
+		}
+  render() {
+	return (
+	  <h1>Hello {this.state.name}</h1>
+	)
+  }
+}
+
+
+step:5
+--------
+	create "index.js" file to render the output to index.html file.
+	(imr, imrd , imp )
+index.js
+---------
+
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student />
+      </React.StrictMode>
+)
+
+step6:
+-----
+	move to myapp7
+	ex:
+		E:/BUI-2pm/ReactProjects> cd myapp7
+
+step7:
+-----
+	Run the application.
+	ex:
+		DE:/BUI-2pm/ReactProjects/myapp7>npm start
+
+step8:
+-------
+	Test the React Application.
+	ex:
+		http://localhost:3000
+
+ex:2
+-------
+Student.js
+------------
+import React, { Component } from 'react'
+
+export default class Student extends Component {
+		state={
+			name:"Alan",
+			rollno:101
+		}
+  render() {
+	return (
+	  <div>
+		<h1>Name: {this.state.name}</h1>
+		<h1>RollNo: {this.state.rollno}</h1>
+	   </div>
+	)
+  }
+}
+
+index.js
+--------
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student />
+      </React.StrictMode>
+)
+
+
+
+ex:3
+---------
+
+Student.js
+-----------
+import React, { Component } from 'react'
+
+export default class Student extends Component {
+		state={
+			name:"Alan",
+			roll:this.props.rollno
+		}
+  render() {
+	return (
+	  <div>
+		<h1>Name: {this.state.name}</h1>
+		<h1>RollNo: {this.state.roll}</h1>
+	   </div>
+	)
+  }
+}
+
+
+index.js
+----------
+
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student rollno={201} />
+      </React.StrictMode>
+)
+
+
+Note:
+-----
+	Here props property we are storing into a state.
+
+
+
+
+
+2)Inside the Constructor
+=======================
+
+class Student extends Component
+{
+	//constructor
+	//props is optional
+	constructor(props)
+	{
+		//it is required to call the parent class constructor
+		super(props);
+
+		//state
+		this.state={
+			name:"alan",
+			prop1: this.props.prop1
+		}
+	}
+	render()
+	{
+		-
+	}
+}
+
+When the component class is created,The constructor is the first called 
+so it is right place to add state.
+
+The class instance has already been created in memory .So we can use 
+"this" to set properties on it.
+
+When we write a constructor ,make sure to call parent class constructor 
+by using super(props) keyword.
+
+When we call super with props ,React will make props avaiable accross/access
+the component through this.props.
+
+
+Project  structure
+--------------------
+myapp8
+|
+|------node-modules
+|
+|------public
+|	|
+|	|------favicon.ico
+|	|------index.html 
+|	|------manifest.json
+|
+|------src
+	|
+	|------index.js
+	|------Student.js 
+|
+|------package.json
+|------README.md
+
+step1:
+------
+	Develop React Application.
+	ex:
+	E:/BUI-2pm/ReactProjects>create-react-app  myapp8
+
+step2:
+------
+	Delete all starting 6 files from src folder.
+
+step3:
+------
+	create a "Student.js" file in "src " folder (rcc).
+	
+Student.js
+---------
+import React, { Component } from 'react'
+
+export default class Student extends Component {
+		
+	constructor()
+	{
+		super();
+
+		this.state={
+			name: "Alan",
+			roll: 101
+		}
+	}
+  render() {
+	return (
+	  <div>
+		<h1>Name: {this.state.name}</h1>
+		<h1>RollNo: {this.state.roll}</h1>
+	   </div>
+	)
+  }
+}
+
+
+
+step:4
+--------
+	create "index.js" file to render the output to index.html file.
+	(imr, imrd , imp )
+index.js
+---------
+
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student />
+      </React.StrictMode>
+)
+
+
+step5:
+-----
+	move to myapp8
+	ex:
+		E:/BUI-2pm/ReactProjects> cd myapp8
+
+step6:
+-----
+	Run the application.
+	ex:
+		DE:/BUI-2pm/ReactProjects/myapp8>npm start
+
+step7:
+-------
+	Test the React Application.
+	ex:
+		http://localhost:3000
+
+ex:2
+---------
+
+Student.js
+---------
+import React, { Component } from 'react'
+
+export default class Student extends Component {
+		
+	constructor(props)
+	{
+		super(props);
+
+		this.state={
+			name: "Alan",
+			roll: this.props.rollno
+		}
+	}
+  render() {
+	return (
+	  <div>
+		<h1>Name: {this.state.name}</h1>
+		<h1>RollNo: {this.state.roll}</h1>
+	   </div>
+	)
+  }
+}
+
+index.js
+----------
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student rollno={501} />
+      </React.StrictMode>
+     
+
+)
+
+
+
+Q)Differences between ReactJS and React Native ?
+
+ReactJS						React Native
+==========					==============
+The ReactJS initial release was in 2013.	The React Native initial release was in 2015.
+
+It is used for developing web applications.	It is used for developing mobile applications.
+
+It can be executed on all platforms.		It is not platform independent.It takes more effort 							to be executed on all platforms.
+
+It uses a JavaScript library and CSS for	It comes with built-in animation libraries.
+animations.
+
+It uses React-router for navigating web pages.	It has built-in Navigator library for 
+						navigating mobile applications.
+
+It uses HTML tags.				It does not use HTML tags.
+
+It can use code components, which saves a lot 	It can reuse React Native UI components & modules of valuable time.					which allow hybrid apps to render natively.
+
+It provides high security.			It provides low security in comparison to ReactJS.
+
+In this, the Virtual DOM renders the browser	In this, Native uses its API to render code for mobile code.						applications.
+
+
+
+Interview Questions
+===================
+1)What is ReactJS?
+
+2)Advantages of RectJS
+
+3)AngularJS vs ReactJS
+
+4)ReactJS vs React Native
+
+5)What is Virtual DOM?
+
+6)Virtual DOM vs Traditional DOM?
+
+7)What is Component in React?
+
+8)Function component vs Class component
+
+9)What is props?
+
+10)What is state?
+
+11)props vs state ?
+
+12)What is composing component?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

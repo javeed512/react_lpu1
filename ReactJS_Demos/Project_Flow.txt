@@ -1,0 +1,349 @@
+
+Explaination of React project and Work flow
+============================================
+
+myapp1
+|
+|----node_modules
+|
+|----public
+|	|
+|	|---favicon.ico
+|	|---index.html
+|	|---manifest.json
+|	|
+|	
+|-----src
+|	|	
+|	|---App.css
+|	|---App.js
+|	|---App.test.js
+|	|---index.css
+|	|---index.js
+|	|---logo.svg	
+|	|
+|---package.json
+|---README.md
+
+"myapp1" is a Name of a project.
+
+"node_modules" contains all packages and dependencies installed.
+
+"favicon.ico" is a favourite icon for a web site.
+
+"index.html"  file holds HTML template of our application(Main template).
+
+"manifest.json" file provides metadata used when your web app is 
+installed on a  user's mobile device or desktop.
+
+"App.css" is a css file related to App.js but it's global.
+
+"App.js" is parent component of our React app.
+
+"App.test.js" is for test environment.
+
+"index.css" is a css file related to index.js but it's global.
+
+"index.js" is a  javascript entry point.
+
+"logo.svg" is a React logo.
+
+"package.json" contains all dependencies used in React app along with their versions..
+
+
+Note:
+-----
+	To build the project, "index.js" and "index.html" must exist
+	with exact file  name(mandatory).
+
+	Above two files are mandatory at the time of deployment 
+	not at the time of development.
+
+                load to          render to              output
+	App.js--------->index.js------------>index.html------->browser
+
+
+ex:
+	App.js
+	------
+	function App() 
+	{
+  		return ( <h1>This is IHUB Talent</h1> );
+	}
+
+	export default App;
+
+	index.js
+	---------
+	import React from 'react';
+	import ReactDOM from 'react-dom/client';
+	import App from './App';
+
+	const root = ReactDOM.createRoot(document.getElementById('root'));
+	root.render(
+  			<React.StrictMode>
+    			<App />
+  			</React.StrictMode>
+	);
+
+	index.html
+	---------
+	<div id="root"></div>
+
+	
+Note:
+-------------------
+StrictMode is a tool for highlighting potential problems in an application. 
+
+Like Fragment, StrictMode does not render any visible UI. It activates additional checks and warnings for its descendants.
+
+Strict mode checks are run in development mode only.They do not impact the production build.
+
+
+
+
+
+Second React Application Development
+======================================
+
+step1:
+--------
+	Make sure that React Project is build successfully.
+	ex:
+		cmd/ReactProjects>create-react-app  myapp2
+
+step2:
+-------
+	Take favourite icon and paste in public folder with favicon.ico name only.
+
+step3:
+------
+	To change the title we need to go "index.html " file.
+
+step4:
+-------
+	delete App.css,App.js ,App.test.js ,index.css,index.js and logo.svg files 
+	from src folder.
+
+step5:
+------
+	create "index.js" file inside "src" folder to create React Element.
+
+index.js
+--------
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+
+const e1=<h1>This is React Example</h1>
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+
+root.render(
+   
+       e1
+   
+)
+
+
+
+step6:
+--------
+	check the output in browser window.
+	ex:
+		http://localhost:3000
+
+step7
+-------
+	create a "App.js" file inside "src" folder to create React component.
+
+App.js
+--------
+function App()
+{
+    return (
+        <h1>IHUB React Tutorial</h1>
+    );
+
+}
+export default App;
+
+step8:
+------
+	import React Component in index.js file and render the component to
+	index.html file.
+
+index.js
+--------
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+
+root.render(
+      <React.StrictMode>
+
+        <App/>
+        <App/>
+        <App/>
+
+      </React.StrictMode>  
+      
+   
+)
+step9:
+------
+	check the output in browser window.
+	ex:
+	http://localhost:3000
+
+
+
+
+React Fragment
+=================
+Fragment is used to group of list of childrens without adding 
+extra nodes of the DOM.
+
+In general, We can return 
+only one element at a time but we can't return more then one element directly.
+
+To return more then one element we need to use React Fragment.
+
+syntax
+---------
+<React.Fragment>
+	-
+	-
+</React.Fragment
+
+or
+
+<>
+	-
+	-
+</>
+
+
+Examples
+----------
+App.js
+-----
+function App
+{
+    return (
+        //return react element
+        return  <h1>IHUB Talent</h1>
+                <h2>React Tutorial For Freshers</h2>
+    );
+}
+//export React component
+export default App
+
+
+o/p: Filed to compile
+
+
+
+To overcome above problem we can use <div> tag and inside that
+<div> tag we can declare any child tags.
+
+ex:
+App.js
+-----
+function App
+{
+    return (
+        //return react element
+        return  
+		<div>
+			<h1>IHUB Talent</h1>
+                	<h2>React Tutorial For Freshers</h2>
+		</div>
+    );
+}
+//export React component
+export default App
+
+
+Note:
+----
+	In above program "<div>" tag is a unused tag.
+	To remove unused/unnecessary tags we can use React Fragment.
+
+
+approach1
+------------
+
+App.js
+-------
+import React from "react";
+
+function App()
+{
+    return (
+            <React.Fragment>
+            <h1>IHUB React Tutorial</h1>
+            <h1>React Classes for Freshers</h1>
+            </React.Fragment>
+    );
+
+}
+export default App;
+
+
+approach2
+----------
+
+App.js
+--------
+import React from "react";
+
+function App()
+{
+    return (
+            <>
+            <h1>IHUB React Tutorial</h1>
+            <h1>React Classes for Freshers</h1>
+            </>
+    );
+
+}
+export default App;
+
+
+approach3
+----------
+
+App.js
+-----
+import React from "react";
+import {Fragment} from 'react';
+function App()
+{
+    return (
+            <Fragment>
+            <h1>IHUB React Tutorial</h1>
+            <h1>React Classes for Freshers</h1>
+            </Fragment>
+    );
+
+}
+export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
