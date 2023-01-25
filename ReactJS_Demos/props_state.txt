@@ -1,0 +1,80 @@
+
+props:
+
+props property can be used inside function component as function parameter.
+props  property can also be used inside class component by using this keyword.
+
+props is immutable in nature (props values cannot be modified)
+
+function  App(props){
+
+	<h1>{props.name}</h1>
+
+}
+
+
+<App name="javeed" />
+
+
+---------------------------------------
+
+state:
+
+state property is used in class component (class component also known as stateful component)
+
+state property is used to store/ handle data in components because state is mutable in naturel
+
+state values can be modified.
+
+state in class component can be declare or initialize in 2 ways.
+1. inside constructor
+2. inside class by using setState()
+
+
+class Student extends Component{
+
+constructor(props)
+{
+super(props);
+
+
+this.state={
+
+	id: 101
+	name: "king"
+	fee: this.props.fee
+	
+
+}
+
+}
+
+}
+
+
+<Student  fee={5000} />
+
+
+
+
+
+
+
+
+state can be used for function components also with the help of hooks (pre-defined methods)
+
+useState() 
+
+
+
+
+
+Note: we can initialize value of props to the state , but reverse is not possible
+
+
+
+
+
+
+
+

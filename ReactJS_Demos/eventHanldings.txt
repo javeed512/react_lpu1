@@ -1,0 +1,747 @@
+Event Handling in React
+============================
+
+What is event
+-------------
+The actions to which a JavaScript can respond are called events.
+ex:
+	clicking an element
+	submitting a form
+	scrolling a page
+	hovering an element
+
+Handling events with React Elements is very similar to handling events
+on DOM elements with some syntactic differences.
+
+in html
+--------
+<button onclick="validate()">clickme</button>
+
+in React
+--------
+<button onClick={validate}>clickme</button>  // function component
+<button onClick={this.validate}>clickme</button> //class component
+
+
+Examples on class component
+===========================
+
+Project  structure
+--------------------
+myapp9
+|
+|------node-modules
+|
+|------public
+|	|
+|	|------favicon.ico
+|	|------index.html (3)
+|	|------manifest.json
+|
+|------src
+	|
+	|------index.js  (2)
+	|------Student.js (1)
+|
+|------package.json
+|------README.md
+
+
+
+ex:1
+-----
+Student.js
+------------
+//rcc is a shortcut to create react component
+import React, { Component } from 'react'
+export default class Student extends Component {
+	handleClick()
+	{
+		
+		console.log("button is clicked",this);
+
+	}
+
+  render() {
+	return (
+	  <div>
+	  	<h1>React Event</h1>
+		<button onClick={this.handleClick}>clickMe</button>
+	  </div>
+	)
+  }
+}
+
+
+
+index.js
+--------
+
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student />
+      </React.StrictMode>
+)
+
+
+
+o/p: 
+button is clicked undefined.
+(check the output in browser console by pressing F12 function key.
+
+Note:
+-----
+	IF we declare "this" keyword inside the class then it points 
+	to current class object .
+
+	If we declare "this" keyword inside the function/method then it points
+	to window object of a browser.
+
+ex:2
+-------
+
+Student.js
+----------
+import React, { Component } from 'react'
+export default class Student extends Component {
+	handleClick=()=>
+	{
+		console.log("button is clicked",this);
+	}
+
+  render() {
+	return (
+	  <div>
+	  	<h1>React Event</h1>
+		<button onClick={this.handleClick}>clickMe</button>
+	  </div>
+	)
+  }
+}
+
+
+index.js
+----------
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student />
+      </React.StrictMode>
+)
+
+
+ex:3
+--------
+Using constructor we can bind this keyword with regular function.
+ 
+ex:
+
+Student.js
+-----------
+import React, { Component } from 'react'
+export default class Student extends Component {
+	
+	constructor(props)
+	{
+		super(props);
+		this.handleClick=this.handleClick.bind(this);	
+	}
+	handleClick()
+	{
+		console.log("button is clicked ",this);
+	}
+  render() {
+	return (
+	  <div>
+	  	<h1>React Event</h1>
+		<button onClick={this.handleClick}>clickMe</button>
+	  </div>
+	)
+  }
+}
+
+
+index.js
+-----------
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student />
+      </React.StrictMode>   
+)
+
+
+Note:
+---------
+Better to work with arrow function because "this" will inherited 
+automatically so we don't need to bind .
+
+A "this" keyword  is useful when we want to read/modify state in an event/function
+
+ex:4
+-----
+Student.js
+------------
+import React, { Component } from 'react'
+export default class Student extends Component {
+	
+	constructor(props)
+	{
+		super(props);
+	
+		this.state={
+			name:"Alan",
+			roll:this.props.rollno
+		}	
+	}
+	handleClick=()=>
+	{
+		console.log("button is clicked ",this);
+	}
+  render() {
+	return (
+	  <div>
+	  	<h1>Name : {this.state.name}</h1>
+		<h1>RollNo : {this.state.roll}</h1>
+		<button onClick={this.handleClick}>clickMe</button>
+	  </div>
+	)
+  }
+}
+
+
+index.js
+---------
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student rollno={501}/>
+      </React.StrictMode>  
+)
+
+
+Example on function component
+===============================
+
+Project  structure
+--------------------
+myapp10
+|
+|------node-modules
+|
+|------public
+|	|
+|	|------favicon.ico
+|	|------index.html (3)
+|	|------manifest.json
+|
+|------src
+	|
+	|------index.js  (2)
+	|------Student.js (1)
+|
+|------package.json
+|------README.md
+
+
+
+
+ex:1
+-----
+
+Student.js
+--------
+function Student()
+{
+	function handleClick()
+	{
+		console.log("button is clicked");
+	}
+	return (
+		<div>
+			<h1>React Event</h1>
+			<button onClick={handleClick}>clickMe</button>
+		</div>
+	)
+}
+export default Student;
+
+
+index.js
+-----------
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student/>
+      </React.StrictMode>
+    
+)
+
+
+
+
+ex:2
+-------
+
+Student.js
+------------
+function Student(props)
+{
+	function handleClick()
+	{
+		console.log("button is clicked");
+	}
+	return (
+		<div>
+			<h1>Name : {props.name }</h1>
+			<button onClick={handleClick}>clickMe</button>
+		</div>
+	)
+}
+export default Student;
+
+
+index.js
+---------
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student name="Alan"/>
+      </React.StrictMode>
+    
+)
+
+
+
+ex:3
+-----
+
+Student.js
+-----------
+function Student(props)
+{
+	const handleClick=()=>
+	{
+		console.log("button is clicked");
+	}
+	return (
+		<div>
+			<h1>Name : {props.name }</h1>
+			<button onClick={handleClick}>clickMe</button>
+		</div>
+	)
+}
+export default Student;
+
+
+index.js
+----------
+
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student name="Alan"/>
+      </React.StrictMode>
+)
+
+
+We can't return false to prevent default behaviour in React.We must call preventDefault explicitly.
+
+in html
+-----------
+<a href="http://www.google.com" 
+		onclick="console.log('clicked'); return false">click</a>
+
+If we write return false then anchor tag will not navigate any where.
+
+
+in React
+--------
+function handleClick(e)
+{
+	e.preventDefault();
+	console.log('clicked');
+}
+<a href="http://www.google.com" onClick={handleClick}>clickme</a>
+
+ex:1
+----
+
+Student.js
+-----------
+function Student(props)
+{
+	const handleClick=()=>
+	{
+		console.log("button is clicked");
+	}
+	return (
+		<div>
+			<h1>Name : {props.name }</h1>
+			<a href="http://www.google.com" onClick={handleClick}>clickme</a>
+
+		</div>
+	)
+}
+export default Student;
+
+
+index.js
+--------
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student name="Alan"/>
+      </React.StrictMode>
+)
+
+
+
+note:
+-----
+	if we click to hyperlink then it will redirect to Google page.
+	To prevent we need to use preventDefault().
+ex:2
+-----
+
+Student.js
+---------
+function Student(props)
+{
+	const handleClick=(e)=>
+	{
+		e.preventDefault();
+		console.log("button is clicked");
+	}
+	return (
+		<div>
+			<h1>Name : {props.name }</h1>
+			<a href="http://www.google.com" onClick={handleClick}>clickme</a>
+
+		</div>
+	)
+}
+export default Student;
+
+index.js
+-------
+
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student name="Alan"/>
+      </React.StrictMode>
+)
+
+Note:
+-----
+	Here button will be clicked but anchor tag never redirect to google page.
+
+
+
+Passing arguments to event handler
+===================================
+We can pass arguments to event handler as given below.
+
+ex:
+-----
+
+Student.js
+------------
+import React, { Component } from 'react'
+
+export default class Student extends Component {
+	state={
+		name: "Alan",
+		id:101
+	}
+	handleClick=(id)=>
+	{
+		console.log(id);
+	}
+	//first handler
+	handleArgument=()=>
+	{
+		this.handleClick(this.state.id)
+	}
+  render() {
+	return (
+	  <div>
+		  <h1>Name: {this.state.name}</h1>
+		  <button onClick={this.handleArgument}>clickMe</button>
+	  </div>
+	)
+  }
+}
+
+
+index.js
+---------
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student/>
+      </React.StrictMode>
+)
+
+
+update state
+==============
+Using setState() method is used to update states.
+
+ex:
+this.state={
+	name:"Global"
+}
+
+this.setState({name:"Javeed Sir"});
+
+ex:1
+-----
+
+Student.js
+---------
+import React, { Component } from 'react'
+
+export default class extends Component {
+	state={
+		name: "Alan",
+		id:101
+	}
+	handleClick=()=>
+	{
+		this.setState({name:"Kelvin"});
+	}
+  render() {
+	return (
+	  <div>
+		  <h1>Name: {this.state.name}</h1>
+		  <h1>Id: {this.state.id}</h1>
+		  <button onClick={this.handleClick}>clickMe</button>
+	  </div>
+	)
+  }
+}
+
+
+index.js
+---------
+
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student/>
+      </React.StrictMode>
+    
+)
+
+
+we can change more then one state at a time.
+
+
+ex:2
+--------
+
+Student.js
+-----------
+import React, { Component } from 'react'
+
+export default class extends Component {
+	state={
+		name: "Alan",
+		id:this.props.rollno
+	}
+	handleClick=()=>
+	{
+		this.setState({name:"Kelvin",id:201});
+	}
+  render() {
+	return (
+	  <div>
+		  <h1>Name: {this.state.name}</h1>
+		  <h1>Id: {this.state.id}</h1>
+		  <button onClick={this.handleClick}>clickMe</button>
+	  </div>
+	)
+  }
+}
+
+
+index.js
+--------
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student rollno={101}/>
+      </React.StrictMode>
+)
+
+
+Note:
+-----
+All the above programs will set the state without refreshing whole webpage
+or other elements in a React.
+
+update state using approach2
+=================================
+
+syntax
+--------
+this.setState(function(state,props)
+{
+	return {}
+});
+
+It accepts a function rather then a object.
+
+It receives the previous state as the first argument.
+
+The props at the time update is applied as the second argument.
+
+ex:
+
+Student.js
+----------
+import React, { Component } from 'react'
+
+export default class extends Component {
+	state={
+		name: "Alan",
+		id:this.props.rollno
+	}
+	handleClick=()=>
+	{
+		this.setState(function(state,props)
+       		 {
+            return {name:"Kelvin",id:601}
+        	});
+	}
+  render() {
+	return (
+	  <div>
+		  <h1>Name: {this.state.name}</h1>
+		  <h1>Id: {this.state.id}</h1>
+		  <button onClick={this.handleClick}>clickMe</button>
+	  </div>
+	)
+  }
+}
+
+index.js
+---------
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student rollno={101}/>
+      </React.StrictMode>
+    
+)
+
+
+
+
+updating the state using arrow function
+---------------------------------------
+Student.js
+----------
+import React, { Component } from 'react'
+
+export default class extends Component {
+	state={
+		name: "Alan",
+		id:this.props.rollno
+	}
+	handleClick=()=>
+	{
+		this.setState((state,props)=>
+        {
+            return {name:"Kelvin",id:601}
+        });
+	}
+  render() {
+	return (
+	  <div>
+		  <h1>Name: {this.state.name}</h1>
+		  <h1>Id: {this.state.id}</h1>
+		  <button onClick={this.handleClick}>clickMe</button>
+	  </div>
+	)
+  }
+}
+
+
+index.js
+---------
+
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <Student rollno={101}/>
+      </React.StrictMode>  
+)
+
+
+
+
+
+
+
+
+
