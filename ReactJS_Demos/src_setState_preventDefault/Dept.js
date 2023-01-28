@@ -10,7 +10,7 @@ export default class Dept extends Component {
 	}
 	handleClick=()=>
 	{
-		this.setState(function (state,props)             // here passing callback which can be anonymous func or arrow func
+		this.setState(function (state,props)       // here passing callback which can be anonymous func or arrow func
        		 {
                 console.log(state)
                 console.log(props)

@@ -1,0 +1,485 @@
+Q)Difference between props and state ?
+
+props						state
+----------					---------
+Props are read-only.				State changes can be done and asynchronous.
+
+Props are immutable.				State is mutable.
+
+
+Props allow us to pass data from one 		State holds information 
+component to other components as an argument.   about the components.
+
+
+Props can be accessed by the child component.	State cannot be accessed by child components.
+
+Props are used to communicate between		States can be used for 	  rendering dynamic the components.							changes with components.
+
+
+Stateless component can have Props.		Stateless components cannot have State.
+
+
+Props make components reusable.			State cannot make components 	reusable.
+
+Props are external and controlled by whatever	The State is internal and  controlled by the	React 
+renders the component. 						Component itself. 		
+
+
+
+
+Phases of components in ReactJS
+================================
+There are four Phases of components in ReactJS.
+1)Mounting
+2)Updating
+3)Error Handling
+4)Unmounting
+
+1)Mounting
+-----------
+Mounting is a process of creating an element and inserting it in a DOM tree.
+
+Diagram: react8.1
+
+2)Updating
+-------------
+Updating is a process of changing state or props of a component and update changes to nodes already in the DOM.
+
+Diagram : react8.2
+
+3)Error Handling
+----------------
+Error Handling used when there is a error during rendering ,in lifecycle
+method or in the constructor of any child component.
+
+Diagram: react8.3
+
+4)Unmounting 
+---------------
+Unmounting is a process of removing components from the DOM.
+In general it will clear the reserved memory.
+
+Diagram: react8.4
+
+
+Life cycle methods 
+==================
+Each component has several lifecycle methods that can override to run
+code at particular time in the process.
+
+Let see below diagram to understand life cycle methods of each component phase.  
+
+Diagram: react8.5
+
+
+Project  structure
+--------------------
+myapp11
+|
+|------node-modules
+|
+|------public
+|	|
+|	|------favicon.ico
+|	|------index.html (3)
+|	|------manifest.json
+|
+|------src
+	|
+	|------index.js (2)
+	|------App.js (1)
+|
+|------package.json
+|------README.md
+
+
+
+
+
+
+Mounting
+==========
+Mounting is a process of creating an element and inserting it in a DOM
+tree.
+
+Following method are called in the following order when an instance of 
+a component is being created and inserted into the DOM.
+
+i)constructor()
+
+ii)static getDerivedStateFromProps()
+
+iii)render()
+
+iv)componentDidMount()
+
+
+i)constructor()
+------------------
+The constructor for a React component is called before it is mounted.
+
+When implementing the constructor for a React.Component sub class, we 
+should call super(props) before any other state.Otherwise this.props will
+be undefined in the constructor , which can lead to bugs.
+
+React constructors are only used for two purposes.
+
+1)Initializing local state by assigning an object to this.state.
+ex:
+	this.State = {name:"IHUBTalent"}
+
+2)Binding event handler methods to an instance.
+	ex:
+	this.handleClick= this.handleClick.bind(this);
+
+ex:
+constructor(props)
+{
+	super(props);
+	this.state={
+		name: "GlobalEdx",
+		roll: this.props.roll
+	}
+	this.handleClick= this.handleClick.bind(this);
+}
+
+ii)static getDerivedStateFromProps()
+-----------------------------------
+A getDerivedStateFromProps is invoked right before calling the render 
+method , both on initial mount and on subseequent updates.
+
+It should returns an object to update the state or null to update nothing.
+
+This method exists for rare use cases where the state depends on changes 
+in props over time.
+
+This method does not have access to the component instance.
+
+syntax
+-------
+static getDerivedStateFromProps(props,state){}
+
+iii)render()
+=============
+This method is defined in each and every component. 
+It is responsible for returning a single root HTML node element. 
+If you don't want to render anything, you can return a null or false value.
+
+iv)componentDidMount()
+-------------------------
+This is invoked immediately after a component gets rendered and placed on the DOM.
+Now, we can do any DOM querying operations.
+
+This method is executed once in a life cycle of a component.
+
+syntax
+-------
+componentDidMount()
+{
+}
+
+
+example
+--------
+
+App.js
+-------
+import React, { Component } from 'react'
+
+export default class App extends Component {
+
+  constructor(props) {
+    console.log("App-constructor called");
+    super(props);
+
+    //initialize the state
+    this.state =
+    {
+        color:"green"
+    };
+  }
+  static getDerivedStateFromProps(props, state) {
+    console.log("App-getDerivedStatedFromProps called") 
+    // update the state or null to update nothing.
+    return {color: props.favcolor};
+  }
+  componentDidMount() {
+    //get the data from server and set to state
+    console.log("App-componentDidMount called");
+   
+  }
+  render() {
+    console.log("App-render called");
+    return (
+      <h1>My Favorite Color is {this.state.color}</h1>
+    );
+  }
+}
+
+
+index.js
+----------
+
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+import App from './App';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <App favcolor="yellow"/>
+      </React.StrictMode>
+     
+
+)
+
+
+
+
+
+Updating 
+===========
+Updating is the process of changing state or props of component and update
+changes to nodes already in the DOM.
+
+An update can be caused by the changes to props or state.These methods are called
+in the following order when a component is being re-rendered.
+
+i)static getDerivedStateFromProps()
+
+ii)render()
+
+iii)shouldComponentUpdate()
+
+iv)getSnapshotBeforeUpdate()
+
+v)componentDidUpdate()
+
+
+i)static getDerivedStateFromProps()
+---------------------------------------
+A getDerivedStateFromProps is invoked right before calling the render method,both
+on the initial mount and on subsequent updates.
+
+It should return an object to update the state or null to update nothing.
+
+This method exists for rare use cases where the state depends on changes in props
+over the time.
+
+This method does not have access to the component instance.As it static method 
+so "this" keyword is not available inside getDerivedStateFromProps() method.
+
+syntax
+------
+static getDerivedStateFromProps(props,state)
+{
+}
+
+ii)shouldComponentUpdate()
+--------------------------------
+It is invoked when a component decides any changes/updation to the DOM.
+ It allows you to control the component's behavior of updating itself. 
+If this method returns true, the component will update. Otherwise, 
+the component will skip the updating.
+
+
+In general it used to to say when our output should be render and when it should not.
+
+
+render() will not be invoked if shoudComponentUpdate() returns false.
+
+syntax
+-------
+shouldComponentUpdate(nextProps,nextState)
+{
+}
+
+iii)render()
+------------
+It is invoked to examine this.props and this.state and return one of the 
+following types: React elements, Arrays and fragments, Booleans or null, String and Number. 
+
+If shouldComponentUpdate() returns false, the code inside render() will be invoked again 
+to ensure that the component displays itself properly.
+
+
+iv) getSnapshotBeforeUpdate()
+------------------------------
+This method is called right before the virtual DOM is about to make
+change to the DOM (before DOM is updated) which allows our components
+to capture the current values or some information from the DOM before 
+it is potentially changed. Any value returned by this lifecycle will
+be passed as third parameter to componentDidUpdate().
+syntax
+-------
+getSnapshotBeforeUpdate(prevProps,prevState)
+{
+}
+
+
+v)componentDidUpdate()
+---------------------
+It is invoked immediately after the component updating occurs. 
+
+In this method, you can put any code inside this which you want to execute once the updating occurs. 
+This method is not invoked for the initial render.
+syntax
+------
+componentDidUpdate(prevProps,prevState,snapshot)
+{}
+
+example
+-----------
+
+Student.js
+--------------
+import React, { Component } from 'react'
+
+export default class App extends Component {
+
+  constructor(props) {
+    console.log("App-constructor called");
+    super(props);
+
+    //initialize the state
+    this.state =
+    {
+        color:"green"
+    };
+  }
+  static getDerivedStateFromProps(props, state) {
+    console.log("App-getDerivedStatedFromProps called") 
+    // update the state or null to update nothing.
+    return {color: props.favcolor};
+  }
+  changeColor = () => {
+    this.setState({color: "black"});
+  }
+  shouldComponentUpdate(nextProps,nextState)
+  {
+    console.log("App- shouldcomponentupdate called");
+    return true;
+  }
+   //this method runs before update
+   getSnapshotBeforeUpdate(prevProps,prevState)
+   {
+       console.log("App - get snap shot before update ");
+       console.log(prevProps,prevState);
+       return true;
+   }
+
+   //this method runs after update
+   componentDidUpdate(prevProps,prevState,snapshot)
+   {
+       console.log("App - component did update ");
+       console.log(prevProps,prevState,snapshot);
+   }
+  render() {
+    console.log("App-render called");
+    return (
+      <div>
+      <h1>My Favorite Color is {this.state.color}</h1>
+      <button type="button" onClick={this.changeColor}>Change color</button>
+      </div>
+    );
+  }
+}
+
+index.js
+----------
+
+import Student from './Student';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+import App from './App';
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+      <React.StrictMode>
+             <App favcolor="yellow"/>
+      </React.StrictMode>
+     
+
+)
+
+
+Unmounting
+===========
+Unmounting is the process of removing components from the DOM.
+
+This method is called when a component is being removed from the DOM.
+
+i)componentWillUnmount()
+
+i)componentWillUnmount()
+-------------------------
+This method is invoked immediately before a component is destroyed and 
+unmounted permanently.
+
+ It performs any necessary cleanup related task such as invalidating 
+timers, event listener, canceling network requests, or cleaning up DOM 
+elements. If a component instance is unmounted, you cannot mount it again.
+
+ex:
+
+App.js
+------------
+import React, { Component } from 'react'
+
+export default class App extends Component {
+ //this method will execute when component is mounted
+ componentDidMount()
+ {
+     console.log("App Mounted");
+ }
+ //this method we will use to do something before component is remove
+ componentWillUnmount()
+ {
+     console.log("App unmounted")
+ }
+ render() {
+console.log("App render");
+     return (
+         <div>
+             <h1>Hello App component</h1>                
+         </div>
+     )
+ }
+
+}
+
+If we want romove any component from DOM we need to use root.unmount() method inside index.js file.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
