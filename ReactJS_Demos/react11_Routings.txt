@@ -1,0 +1,607 @@
+ React Router
+================
+Routing is a process in which a user is directed to different pages based on their action or request.
+
+ReactJS Router is mainly used for developing Single Page Web Applications. 
+
+React Router is used to define multiple routes in the application. 
+
+When a user types a specific URL into the browser, and if this URL path matches any 'route' inside the router file, the user will be redirected to that particular route.
+
+React Router is a standard library system built on top of the React and used to create routing in the React application using React Router Package.
+
+
+It provides the synchronous URL on the browser with data that will be displayed on the web page. 
+
+It maintains the standard structure and behavior of the application and mainly used for developing single page web applications.
+
+React contains three different packages for routing.
+
+1)react-router: 
+----------------
+It provides the core routing components and functions for the React Router applications.
+
+react-router-native: 
+--------------------
+It is used for mobile applications.
+
+react-router-dom: 
+-------------------
+It is used for web applications design.
+
+Note:
+-------
+It is not possible to install react-router directly in your application. To use react routing, first, you need to install react-router-dom modules in your application. 
+
+
+We have two types of router components.
+
+1)<BrowserRouter>: 
+-------------------
+		It is used for handling the dynamic URL.
+2)<HashRouter>: 
+--------------
+		It is used for handling the static request.
+
+
+Project  structure
+--------------------
+myapp14
+|
+|------node-modules
+|
+|------public
+|	|
+|	|------favicon.ico
+|	|------index.html 
+|	|------manifest.json
+|
+|------src
+	|
+	|------index.js
+	|------App.js
+	|------About.js
+	|------Contact.js
+|
+|------package.json
+|------README.md
+
+step1:
+------
+	create react "myapp14" project in VSC.
+	ex:
+	projects>create-react-app myapp14
+
+step2:
+--------
+	Move to myapp14 project.
+	ex:
+	project> cd   myapp14
+
+
+step3:
+------
+	install react router dom.
+	ex:
+	project/myapp14>npm install --save react-router-dom	
+
+
+step4:
+-------
+	Restart the application .
+	ex:
+	myapp14> npm start
+
+
+step5:
+--------
+	create App.js,Home.js,About.js ,Contact.js and Error.js component inside "src" folder.
+
+App.js
+-------
+
+
+import Home from './Home';
+import Contact from './Contact';
+import About from './About';
+import Error from './Error'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+function App() {
+  return (
+    <div>
+       <BrowserRouter>
+      <Routes>
+        <Route exact path="/" element={<Home />}/>
+        <Route path="/about" element={<About />}/>
+        <Route path="/contact" element={<Contact />}/>
+        <Route path="*" element={<Error />}/>
+      </Routes>
+      </BrowserRouter>
+    </div>
+  );
+}
+export default App;
+
+Home.js
+----------
+function Home()
+{
+    return (
+        <div>
+          <h1>Home</h1>
+       </div>
+    )
+}
+export default Home;
+
+
+About.js
+---------
+function About()
+{
+    return (
+        <div>
+          <h1>About</h1>
+       </div>
+    )
+}
+export default About;
+
+Contact.js
+----------
+function Contact()
+{
+    return (
+        <div>
+          <h1>Contact</h1>
+       </div>
+    )
+}
+export default Contact;
+
+
+Error.js
+----------
+function Error()
+{
+    return(
+        <div>
+            <h1>OOPS! 404 Error </h1>
+        </div>
+    )
+}
+export default Error;
+
+
+step6:
+------
+	create index.js component to render the output inside "src" folder.
+
+index.js
+---------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';  
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+
+    <App/>
+    
+  </React.StrictMode>
+);
+
+step7:
+-------
+	Test the application by using below url's.
+	ex:
+	http://localhost:3000/
+	http://localhost:3000/home
+	http://localhost:3000/about
+	http://localhost:3000/contact
+	http://localhost:3000/gallery
+	http://localhost:3000/services
+	
+
+
+Adding Navigation using Link component
+==========================================
+A Link component is used to create links which allow to navigate on different URLs and render its content without reloading the webpage.
+
+ex:2
+-------
+Note: For Routing configuration we have multiple options , like
+New versions: (recommend)
+---------------
+i. <BrowserRouter> <Route ... ></Route>   </BrowserRouter>
+ii. <HashRouter> <Route ... ></Route>   </HashRouter>
+old versions (not recommend)
+-------------:
+i. <Router> <Route ... ></Route>   </Router>
+ii. <Switch> <Route ... ></Route>   </Switch>
+App.js
+---------
+
+import Home from './Home';
+import Contact from './Contact';
+import About from './About';
+import Error from './Error'
+
+import {Link, Routes,Route,BrowserRouter } from 'react-router-dom'  
+function App() {
+  return (
+    <div>
+      <BrowserRouter>
+      <h1>Bookkeeper</h1>
+      <nav >
+        <Link style={{display:"block"}} to="/">Home</Link>
+        <Link style={{display:"block"}} to="/about">About Us</Link>
+        <Link style={{display:"block"}} to="/contact">Contact US</Link>
+      </nav>
+      <Routes>
+        <Route exact path="/" element={<Home />}/>
+        <Route path="/about" element={<About />}/>
+        <Route path="/contact" element={<Contact />}/>
+        <Route path="*" element={<Error />}/>
+      </Routes>
+      </BrowserRouter>
+    </div>
+  );
+}
+export default App;
+
+Home.js
+-----------
+function Home()
+{
+    return (
+        <div>
+          <h1>Home</h1>
+       </div>
+    )
+}
+export default Home;
+
+About.js
+------------
+function About()
+{
+    return (
+        <div>
+          <h1>About</h1>
+       </div>
+    )
+}
+export default About;
+
+Contact.js
+--------------
+function Contact()
+{
+    return (
+        <div>
+          <h1>Contact</h1>
+       </div>
+    )
+}
+export default Contact;
+
+
+Error.js
+----------
+function Error()
+{
+    return(
+        <div>
+            <h1>OOPS! 404 Error </h1>
+        </div>
+    )
+}
+export default Error;
+
+
+index.js
+-----------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';  
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+
+    <App/>
+    
+  </React.StrictMode>
+);
+
+
+
+Redirecting from one component to another component implicitly.
+
+1. <Redirect to="new_path"  />   till reactjs-version-5
+2. <Navigate to="new_path"  />    from reactjs-version-6 
+
+
+
+
+Lists in ReactJs
+=================
+Lists are used to display data in an ordered format and mainly used to 
+display menus on websites. In React, Lists can be created in a similar 
+way as we create lists in JavaScript. Let us see how we transform Lists
+ in regular JavaScript.
+
+The map() function is used for traversing the lists. 
+
+In the below example, the map() function takes an array of numbers 
+and multiply their values with 2.
+
+ We assign the new array returned by map() to the variable
+ multiplyNums and log it.
+
+ex:1
+----
+App.js
+-------
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    render() {
+            const arr=[10,20,30,40];
+        return (
+            <ul>
+                <li>{arr[0] * 2}</li>
+                <li>{arr[1] * 2}</li>
+                <li>{arr[2] * 2}</li>
+                <li>{arr[3] * 2}</li>
+            </ul>
+         
+        )
+    }
+}
+
+index.js
+--------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';  
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+
+    <App/>
+    
+  </React.StrictMode>
+);
+
+
+Above approach is not recommanded to use because it increase length
+of our code for each index of an array.
+
+ex:
+App.js
+-------
+import React, { Component } from 'react'
+
+export default class App extends Component {
+    render() {
+            const arr=[10,20,30,40];
+            const newArr = arr.map( (num)=>
+            {
+            return <li>{num*2}</li>
+            }) ;
+            
+            return <ul>{newArr}</ul>
+            }
+}
+
+index.js
+---------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';  
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+
+    <App/>
+    
+  </React.StrictMode>
+);
+
+
+ex:3
+---------
+App.js
+--------
+import React, { Component } from 'react'
+
+export default class App extends Component {
+  state={
+    users:[
+      {id:101,name:"raja",password:"rani"},
+      {id:102,name:"king",password:"kingdom"},
+      {id:103,name:"raj",password:"simran"}
+
+    ]
+  }
+  render() {
+    return (
+     <div>
+       <h1>Id:{this.state.users[0].id} Name:{this.state.users[0].name} Password:{this.state.users[0].password}</h1>
+
+       <h1>Id:{this.state.users[1].id} Name:{this.state.users[1].name} Password:{this.state.users[1].password}</h1>
+
+       <h1>Id:{this.state.users[2].id} Name:{this.state.users[2].name} Password:{this.state.users[2].password}</h1>
+     </div>
+    )
+  }
+}
+
+index.js
+--------------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';  
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+
+    <App/>
+    
+  </React.StrictMode>
+);
+
+
+
+Note:
+--------
+In above program our code is getting duplicated and it increase length
+of our code.
+
+To overcome this limitation we can use map() method.
+
+ex:
+App.js
+---------
+import React, { Component } from 'react'
+
+export default class App extends Component {
+  state={
+    users:[
+      {id:101,name:"raja",password:"rani"},
+      {id:102,name:"king",password:"kingdom"},
+      {id:103,name:"raj",password:"simran"}
+
+    ]
+  }
+  render() {
+    const newUsers=this.state.users.map(user=>
+      {
+        console.log(user);
+      return <h1>Id:{user.id} Name:{user.name} Password: {user.password}</h1>
+      })
+    return <div>{newUsers}</div>
+  }
+}
+
+index.js
+-----------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';  
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+
+    <App/>
+    
+  </React.StrictMode>
+);
+
+
+
+Key in ReactJS
+==================
+A key is a special string attribute you need to include when creating
+lists of elements.
+
+Keys help react identify which items have changed are added or are removed.
+
+Keys should be given to the elements inside the array to given the 
+elements a stable identity.
+
+The best way to pick a key is to use a string that uniquely identifies 
+a list item among its siblings.
+
+Most often you would use ID's from your data as keys.
+
+Keys used within arrays should be unique among their siblings .However
+they don't need to be globally unique.We can use the same keys when we 
+produce two different arrays.
+
+Keys serve as a hind to react but they don't get passed to your components.
+
+ex:
+---
+const arr=[10,20,30];
+
+//using array map method
+const newArr=arr.map(num=>{
+	return <li key={num}>{num*2}</li>;
+});
+
+
+
+ex:
+
+App.js
+---------
+import React, { Component } from 'react'
+
+export default class App extends Component {
+  state={
+    users:[
+      {id:101,name:"raja",password:"rani"},
+      {id:102,name:"king",password:"kingdom"},
+      {id:103,name:"raj",password:"simran"}
+
+    ]
+  }
+  render() {
+    const newUsers=this.state.users.map(user=>
+      {
+        console.log(user);
+      return <h1 key={user.id}>Id:{user.id} Name:{user.name} Password: {user.password}</h1>
+      })
+    return <div>{newUsers}</div>
+  }
+}
+
+index.js
+---------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';  
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+
+    <App/>
+    
+  </React.StrictMode>
+);
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
