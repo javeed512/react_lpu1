@@ -1,0 +1,429 @@
+2)Uncontrolled component
+------------------------
+The uncontrolled input is similar to the traditional HTML form inputs.
+The DOM itself handles the form data. Here, the HTML elements maintain
+their own state that will be updated when the input value changes.
+
+To write an uncontrolled component, you need to use a ref to get form values from the DOM. In other words, there is no need to write an event handler for every state update. You can use a ref to access the input  field value of the form from the DOM.
+
+
+App.js
+--------
+import React, { Component } from 'react'
+
+export default class App extends Component {
+        constructor(props)
+        {
+                super(props);
+                this.state={
+                        value:""
+                }
+                //create ref
+                this.textInput=React.createRef();
+
+        }
+        handleSubmit=(e)=>
+        {
+               e.preventDefault();
+               //set the data of text field to state.
+               this.setState({value:this.textInput.current.value});
+        }
+       
+        componentDidMount=()=>
+        {
+           this.textInput.current.focus();
+        }
+        render() {
+                return (
+                        <div>
+                           <h1>You Enter Name : {this.state.value}</h1>
+                           <form onSubmit={this.handleSubmit}>
+                              Name : <input type="text" ref={this.textInput}/>
+                              <input type="submit" value="submit"/>
+                           </form>
+                        </div>
+                )
+        }
+}
+
+index.js
+---------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App'; 
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+
+
+
+Lifting State up in ReactJS
+===============================
+Lifting stateup is a technique to use Parent component state into child component state.
+
+
+ex:
+----
+App.js
+--------
+import React, { Component } from 'react'
+import User from "./User";
+export default class App extends Component {
+        state={
+                name:"Alan"
+        }
+        render() {
+                return <User/>
+                       
+            
+        }
+}
+
+User.js
+-------
+ import React, { Component } from 'react'
+import App from "./App";
+export default class User extends Component {
+    render() {
+        return (
+            
+                <div>{this.state.name}</div>
+         
+        )
+    }
+}
+        
+index.js
+----------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+
+Note:
+----
+In above example, we will get compile time error.
+
+To use parent state in child component  then we can to use props.
+
+ex:
+
+App.js
+-----
+import React, { Component } from 'react'
+import User from "./User";
+export default class App extends Component {
+        state={
+                name:"Alan"
+        }
+        render() {
+                return <User name={this.state.name}/>
+                       
+            
+        }
+}
+
+User.js
+-------
+import React, { Component } from 'react'
+import App from "./App";
+export default class User extends Component {
+    render() {
+        return (
+            
+                <div>{this.props.name}</div>
+         
+        )
+    }
+}
+
+index.js
+-----------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+ex:2
+-----
+
+App.js
+--------
+import React, { Component } from 'react'
+import Guest from './Guest';
+import User from "./User";
+export default class App extends Component {
+        state={
+                name:"Alan"
+        }
+        render() {
+                return <div>
+                        <User name={this.state.name}/>
+                         <Guest name={this.state.name}/>       
+                        </div>                       
+            
+        }
+}
+
+User.js
+--------
+import React, { Component } from 'react'
+import App from "./App";
+export default class User extends Component {
+    render() {
+        return (
+            
+                <div>{this.props.name}</div>
+         
+        )
+    }
+}
+
+Guest.js
+--------
+import React, { Component } from 'react'
+
+export default class Guest extends Component {
+    render() {
+        return (
+            
+                <div><h1>{this.props.name}</h1></div>
+         
+        )
+    }
+}
+
+
+index.js
+---------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+
+
+Formik
+============
+Formik is third party React form library. 
+
+It provides basic form programming and validation. 
+
+It is based on controlled component and greatly reduces the time to do form programming.
+
+project structure
+-------------------
+
+myapp16
+|
+|-----public
+|	|
+	|----favicon.ico
+	|----index.html
+	|----manifest.json
+|
+|-----src
+|	|
+	|------index.js
+	|------App.js
+	|------Signup.js
+	|
+	|------assets
+		|
+		|-------micky.png
+|
+|---package.json
+|
+|---package-lock.json
+|
+|
+
+
+step1:
+------
+	create myapp16 react project in VSC Editor.
+	ex:
+		reactprojects> create-react-app  myapp16
+
+step2:
+------
+	Move to myapp16 project.
+	ex:
+		reactprojects>cd myapp16
+
+
+step3:
+----
+	Install Bootstrap package.
+	ex:
+		reactprojects/myapp16> npm install react-bootstrap bootstrap
+
+
+step4:
+-----
+	Install Formik and Yup library.
+	ex:
+		reactprojects/myapp16> npm install formik
+		reactprojects/myapp16> npm install yup
+
+step5:
+------
+	Start React project.
+	ex:
+		reactprojects/myapp16>npm start
+
+
+step6:
+------
+	create App.js , Signup.js and index.js file inside src folder.
+
+
+App.js
+----------
+import logo from './logo.svg';
+import './App.css';
+import pic from './assets/micky.png';
+import Signup from './Signup';
+function App() {
+  return (
+    <>
+     <div className="container mt-5">
+      <div className="row">
+        <div className="col-sm-5">
+         <Signup/>
+        </div>
+        <div className="col-sm-7">
+          <img src={pic}/>
+        </div>
+      </div>
+     </div>
+    </>
+   
+  );
+}
+
+export default App;
+
+
+Signup.js
+-----------
+import {Formik,Form,Field,ErrorMessage} from 'formik';
+import * as yup from 'yup';
+function Signup()
+{
+    const defaultValues={
+        name:"",
+        email:"",
+        password:"",
+        gender:""
+    }
+
+    const validationSchema= yup.object().shape({
+        name: yup.string().required('Name is mandatory'),
+        email:yup.string().required('Email is mandatory').email('Insert valid email'),
+        password: yup.string().required('password is mandatory').min(6),
+        gender: yup.string().required('gender is mandatory')
+})
+
+    const handleSubmit=(values)=>
+    {
+      console.log('values',values);
+    }
+    return (
+        <>
+        <h1>Sign Up</h1>
+        <Formik initialValues={defaultValues} 
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}>
+
+            <Form>
+                <Field type="text" name="name" placeholder='Enter the name' className="form-control mt-4"/>
+                <p className="text-danger">
+                    <ErrorMessage name="name"/>
+                </p>
+                
+                <Field type="text" name="email" placeholder='Enter the email' className="form-control mt-4"/>
+                <p className="text-danger">
+                    <ErrorMessage name="email"/>
+                </p> 
+               
+                <Field type="password" name="password" placeholder='Enter the password' className="form-control mt-4"/>
+                <p className="text-danger">
+                    <ErrorMessage name="password"/>
+                </p>
+                <Field component="select" name="gender" className="form-control mt-4">
+                    <option value="disabled">please select</option>
+                    <option value="male">MALE</option>
+                    <option value="female">FEMALE</option>
+                </Field>
+                <p className="text-danger">
+                    <ErrorMessage name="gender"/>
+                </p>
+               
+                <input type="submit"  className="btn btn-primary w-100 mt-4" value="submit"/>    
+            </Form>    
+        </Formik>    
+        </>
+    )
+}
+
+export default Signup;
+
+
+index.js
+----------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import "bootstrap/dist/css/bootstrap.css";
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+
+
+
+
+
+
+
