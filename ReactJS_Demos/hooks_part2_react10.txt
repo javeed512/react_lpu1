@@ -1,0 +1,493 @@
+React useRef Hook
+======================
+The useRef Hook allows us to persist values between renders.
+
+It can be used to store a mutable value that does not cause a re-render when updated.
+
+It can be used to access a DOM element directly.
+
+ex:1
+-------
+App.js
+----------
+import {useState,useRef,useEffect} from 'react';
+function App()
+{
+ const [name,setName]=useState("");
+ const ref=useRef();
+
+  const handleClick=()=>
+  {
+    //renders the output
+    //setName("Alan");
+    
+    //not renders the output
+    ref.current.value="Kelvin";
+  }
+
+
+  return (
+    <div>
+      <h1>Name : {name}</h1>
+      <button onClick={handleClick}>clickMe</button>
+    </div>
+  )
+
+}
+export default App;
+
+index.js
+----------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+
+Note:
+-------
+	We can use useRef hook when we want to hold the data for temperory purpose and 
+	later we can add to state for rendering.
+
+
+ex:2
+---------
+App.js
+---------
+import {useState,useRef,useEffect} from 'react';
+function App()
+{
+ const [inputValue , setInputValue]=useState("");
+ const count=useRef(0);
+
+ useEffect(()=>
+ {
+   count.current=count.current+1;
+ })
+
+//const fun = (e)=>setInputValue(e.target.value);
+
+  return (
+    <div>
+      <input type="text" value={inputValue} onChange={(e)=>setInputValue(e.target.value)}/>
+      <h1>Count Render :{count.current}</h1>
+    </div>
+  )
+
+}
+export default App;
+
+index.js
+----------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+
+ex:3
+-------
+
+App.js
+-------
+import {useRef} from 'react';
+function App()
+{
+ const inputRef=useRef(null);
+
+  const handleClick=()=>
+  {
+      inputRef.current.value="Alan";
+      inputRef.current.focus();
+      inputRef.current.style.color="red";
+      inputRef.current.style.display="none";
+  }
+
+
+  return (
+    <div>
+     <input type="text" ref={inputRef}/>
+     <button onClick={handleClick}>Handle Input</button>
+    </div>
+  )
+
+}
+export default App;
+
+
+index.js
+----------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+
+
+React useCallback Hook
+=========================
+The React useCallback Hook returns a memorized callback function.
+
+Think of memorization as caching a value so that it does not need to be recalculated.
+
+The useCallback Hook only runs when one of its dependencies update.
+
+The useCallback and useMemo Hooks are similar. The main difference is that useMemo returns a memoized value and useCallback returns a memoized function. 
+
+
+ex:1
+--------
+
+App.js
+--------
+import {useState} from 'react';
+import Student from './Student';
+import Title from './Title';
+import Button from './Button';
+function App()
+{
+  const [age,setAge]=useState(18);
+   const [sal,setSal]=useState(1000);
+
+  const incrementAge=()=>
+  {
+    setAge(age+1);
+  }
+  const incrementSalary=()=>
+  {
+    setSal(sal+1000);
+  }
+
+  return (
+    <div>
+      <Title/>
+     <Student text="age" count={age} />
+     <Button handleClick={incrementAge}>Increment age</Button>
+     <Student text="salary" count={sal} />
+     <Button handleClick={incrementSalary}>Increment sal</Button>
+    </div>
+  )
+
+}
+export default App;
+
+Title.js
+---------
+function Title()
+{
+    console.log("title component is render");
+    return(
+        <h1>React Title component</h1>
+    )
+}
+export default Title;
+
+Student.js
+------------
+function Student({text,count})
+{
+    console.log("Rending :",text);
+    return (
+        <div>{text} - {count}</div>
+    )
+}
+export default Student;
+
+
+Button.js
+----------
+function Button( {handleClick,children})
+{
+    console.log("Rendering button : ",children);
+    return (
+        <button onClick={handleClick}>{children}</button>
+    )
+}
+export default Button;
+
+index.js
+-----------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+Note:
+-----
+	In child component we need to pass props and state values.
+	Here for every increment child components are rendering unnecesaary.
+	To overcome this limitation we need to use react useCallback hook.
+
+
+ex:2
+-------
+
+App.js
+---------
+import {useState,useCallback} from 'react';
+import Student from './Student';
+import Title from './Title';
+import Button from './Button';
+function App()
+{
+  const [age,setAge]=useState(18);
+  const [sal,setSal]=useState(1000);
+  
+  const incrementAge= useCallback(()=>
+  {
+      setAge(age+1);
+  },[age]);
+  
+  const incrementSalary= useCallback(()=>
+  {
+      setSal(sal + 1000);
+  },[sal])
+
+  return (
+    <div>
+      <Title/>
+     <Student text="age" count={age} />
+     <Button handleClick={incrementAge}>Increment age</Button>
+     <Student text="salary" count={sal} />
+     <Button handleClick={incrementSalary}>Increment sal</Button>
+    </div>
+  )
+
+}
+export default App;
+
+
+Title.js
+-----------
+import React from "react";
+function Title()
+{
+    console.log("title component is render");
+    return(
+        <h1>React Title component</h1>
+    )
+}
+export default React.memo(Title);
+
+Student.js
+------------
+import React from "react";
+function Student({text,count})
+{
+    console.log("Rending :",text);
+    return (
+        <div>{text} - {count}</div>
+    )
+}
+export default React.memo(Student);
+
+Button.js
+------------
+import React from "react";
+function Button( {handleClick,children})
+{
+    console.log("Rendering button : ",children);
+    return (
+        <button onClick={handleClick}>{children}</button>
+    )
+}
+export default React.memo(Button);
+
+index.js
+---------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+
+Custom Hooks
+===============
+Hooks which are created by the programmer are called custom Hooks.
+
+ex:1
+--------
+
+Customer.js
+---------------
+import React ,{useState} from "react";
+
+//create a custom hook
+function useCustomCounter()
+{
+    const [count,setCount]=useState(0);
+
+    const handleIncrement= ()=>
+    {
+        setCount(count + 1);
+    }
+    return {
+        count,
+        handleIncrement
+    }
+}
+export default useCustomCounter;
+
+App.js
+-----
+import React from 'react'
+import useCustomCounter from "./Customer";
+
+function App()
+{
+    //storing custom hook 
+    const data=useCustomCounter();
+
+    return (
+            <>
+                <h1>Count up : {data.count}</h1>
+                <button onClick={data.handleIncrement}>Click</button>
+            </>
+    )
+}
+export default App;
+
+index.js
+-----
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+we can use custom hooks for inidividual functionality.
+
+ex:2
+--------
+
+
+Customer.js
+---------------
+import React ,{useState} from "react";
+
+//create a custom hook
+function useCustomCounter()
+{
+    const [count,setCount]=useState(0);
+
+    const handleIncrement= ()=>
+    {
+        setCount(count + 1);
+    }
+    return {
+        count,
+        handleIncrement
+    }
+}
+export default useCustomCounter;
+
+
+App.js
+-------
+import React from 'react'
+import useCustomCounter from "./Customer";
+
+function App()
+{
+    //storing custom hook 
+    const data=useCustomCounter();
+    const data1=useCustomCounter();
+
+    return (
+            <>
+                <h1>Count up : {data.count}</h1>
+                <button onClick={data.handleIncrement}>Click</button>
+
+                <h1>Count up : {data1.count}</h1>
+                <button onClick={data1.handleIncrement}>Click</button>
+            </>
+    )
+}
+export default App;
+
+
+index.js
+-----
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
