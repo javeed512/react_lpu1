@@ -1,0 +1,55 @@
+.container
+{
+    position: absolute;
+    top:220px;
+    left:450px;
+}
+.container h3{
+    text-align: center;
+}
+
+.quantity
+{
+    margin: auto;
+    background-color: antiquewhite;
+    width:200px;
+    height:40px;
+    border-radius: 5px;
+}
+.quantity_minus
+{
+    padding:15px;
+}
+.quantity_minus span{
+    font-size:30px;
+    font-weight: bold;
+    padding:5px;
+}
+.quantity_minus:hover span{
+  background-color: aliceblue;
+  cursor: pointer;
+}
+
+.quantity .quantity_input
+{
+    width:50px;
+    height:40px;
+    box-sizing: border-box;
+    padding:10px;
+    text-align: center;
+    font-size:35px;
+}
+.quantity_plus
+{
+    padding:15px;
+}
+.quantity_plus span{
+    font-size:30px;
+    font-weight: bold;
+    padding:5px;
+}
+.quantity_plus:hover span
+{
+    background-color: aliceblue;
+    cursor: pointer;
+}
