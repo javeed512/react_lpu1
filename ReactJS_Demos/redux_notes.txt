@@ -1,0 +1,343 @@
+React Redux
+=================
+Redux is a pattern and library for managing and updating application state using events called 
+actions. 
+
+React uses Redux for building the user interface. 
+
+It serve as a centralized store for the state that needs to be used across your entire application, with the rules ensuring that the state can only be updated in a predictable fashion.
+
+It allows React components to read data from a Redux Store, and dispatch Actions to the Store to update data. Redux helps apps to scale by providing a sensible way to manage state through a unidirectional data flow model.
+Diagram : react17.1
+
+redux architecture
+=======================
+Diagram : react17.2
+
+The components of Redux architecture are explained below.
+
+STORE: 
+---------
+A Store is a place where the entire state of your application lists. It manages the status of the application and has a dispatch(action) function. It is like a brain responsible for all moving parts in Redux.
+
+ACTION: 
+--------
+Action is sent or dispatched from the view which are payloads that can be read by Reducers. It is a pure object created to store the information of the user's event. It includes information such as type of action, time of occurrence, location of occurrence, its coordinates, and which state it aims to change.
+
+REDUCER: 
+--------
+Reducer read the payloads from the actions and then updates the store via the state accordingly. It is a pure function to return a new state from the initial state.
+
+
+
+project structure
+-------------------
+myapp20
+|
+|----node_modules
+|
+|----public
+|	|
+	|---favicon.ico
+	|---index.html
+	|---manifest.json
+
+|-----src
+|	|
+|	|---index.js
+|	|---App.js
+	|---App.css
+
+	|---actions (folder)
+		|
+		|----index.js
+|	|
+|	|---reducers
+|	|	|
+|		|----index.js
+		|----upDown.js
+	|
+|	|---store.js
+|
+|
+|-----package.json
+|
+
+step1:
+------
+	create  myapp20 react project in VSC.
+	ex:
+	projects>create-react-app myapp20
+
+
+step2:
+------
+	Move to myapp20 project.
+	ex:
+	projects> cd myapp20
+
+step3:
+-----
+	Install redux in React project.
+	ex:
+	projects/myapp20> npm install redux react-redux
+ 	
+step4:
+----
+	Now run the project by using below command.
+	ex:
+	projects/myapp20> npm start
+
+
+step5:
+------
+	Add redux devtools extension in our browser window.
+	ex:
+	https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en	
+	--> Just click to : Add to chrome
+
+step6:
+-------
+	Write the code inside "App.js" file (shortcut : rafce) .
+
+App.js
+--------
+import React from 'react'
+import "./App.css";
+const App = () => {
+  return (
+    <>
+        <div className="container">
+            <h1>Increment/Decrement Counter</h1>
+            <h3>React and Redux</h3>
+
+         <div className="quantity">
+            <a className="quantity_minus" title="Decrement"><span> - </span></a>
+            <input name="quantity" type="text" className="quantity_input" value="0"/>
+            <a className="quantity_plus" title="Increment"><span> + </span></a>
+         </div>   
+        </div>
+    </>
+  )
+}
+
+export default App
+
+
+step7:
+-------
+	Write the code inside "App.css" file.
+
+App.css
+--------
+.container
+{
+    position: absolute;
+    top:220px;
+    left:450px;
+}
+.container h3{
+    text-align: center;
+}
+
+.quantity
+{
+    margin: auto;
+    background-color: antiquewhite;
+    width:175px;
+    height:40px;
+    border-radius: 5px;
+}
+.quantity_minus
+{
+    padding:15px;
+}
+.quantity_minus span{
+    font-size:30px;
+    font-weight: bold;
+    padding:5px;
+}
+.quantity_minus:hover span{
+  background-color: aliceblue;
+  cursor: pointer;
+}
+
+.quantity .quantity_input
+{
+    width:50px;
+    height:40px;
+    box-sizing: border-box;
+    padding:10px;
+    text-align: center;
+    font-size:35px;
+}
+.quantity_plus
+{
+    padding:15px;
+}
+.quantity_plus span{
+    font-size:30px;
+    font-weight: bold;
+    padding:5px;
+}
+.quantity_plus:hover span
+{
+    background-color: aliceblue;
+    cursor: pointer;
+}
+
+step8:
+-------
+	create a action inside "src/actions/index.js" file.
+
+index.js
+----------
+export const incNumber =()=>
+{
+    return {
+        type:"INCREMENT"
+    }
+}
+export const decNumber =()=>
+{
+    return {
+        type:"DECREMENT"
+    }
+}
+
+step9:
+-------
+	create one reducer inside "src/reducers/upDown.js" file.
+
+upDown.js
+----------
+const initialState=0;
+const changeTheNumber=(state=initialState,action)=>
+{
+    switch(action.type)
+    {
+        case "INCREMENT" : return state+1;
+        case "DECREMENT" : return state-1;
+        default: return state;
+    }
+}
+export default changeTheNumber; 
+
+
+step10:
+------
+	Add every reducer to root reducer inside "src/reducers/index.js" file.
+
+index.js
+---------
+import changeTheNumber from "./upDown";
+import {combineReducers} from "redux";
+
+const rootReducer= combineReducers({
+    changeTheNumber
+})
+
+export default rootReducer;
+
+step11:
+-------
+	create a reducer store store.js file inside "src" folder.	
+
+store.js
+----------
+import {createStore} from "redux";
+import rootReducer from "./reducers/index";
+
+const store=createStore(rootReducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+
+export default store;
+			
+Note:
+-------
+window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() we can copy from below
+url
+ex:
+	https://github.com/reduxjs/redux-devtools/tree/main/extension#installation -->scroll down
+	--> With Redux -> basic store .
+
+
+step12:
+---------
+	Now import "store" and "Provider" inside index.js file.
+
+index.js
+-----------
+import App from "./App";
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+import store from './store';
+import {Provider } from "react-redux";
+
+store.subscribe(()=>console.log(store.getState()));
+
+const root=ReactDOM.createRoot(document.getElementById('root'))
+root.render(
+    <React.StrictMode>
+        <Provider store={store}>
+        <App/>
+        </Provider>
+    </React.StrictMode>
+)	
+
+step13:
+------
+	Now add useSelect, useDispatch to select and change the state from redux inside 
+	App.js file
+	
+App.js 
+----------
+import React from 'react'
+import "./App.css";
+import { useSelector,useDispatch } from 'react-redux';
+import { incNumber,decNumber} from "./actions/index";
+const App = () => {
+  const myState=useSelector((state)=> state.changeTheNumber);
+  const dispatch=useDispatch();
+  return (
+    <>
+        <div className="container">
+            <h1>Increment/Decrement Counter</h1>
+            <h3>React and Redux</h3>
+
+         <div className="quantity">
+            <a className="quantity_minus" title="Decrement"
+             onClick={()=>dispatch(decNumber())}><span> - </span></a>
+            <input name="quantity" type="text" className="quantity_input" value={myState}/>
+            <a className="quantity_plus" title="Iecrement"
+            onClick={()=>dispatch(incNumber())}><span> + </span></a>
+         </div>   
+        </div>
+    </>
+  )
+}
+
+export default App
+	
+
+step14:
+------
+	Check the output by using below url.
+	ex:
+		http://localhost:3000/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
