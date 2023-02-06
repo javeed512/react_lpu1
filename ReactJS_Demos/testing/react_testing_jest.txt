@@ -1,0 +1,182 @@
+React Unit Testing
+======================
+Any piece of code that has no tests is said to be legacy code.
+
+One of the best ways to avoid creating legacy code is using test-driven development (TDD).
+
+we will use Jest and Enzyme to perform Unit testing for a Reactjs component with basic functionality using TDD.
+
+Jest is an open-source test framework created by Facebook that has a great integration with Reactjs. 
+
+It includes a command line tool for test execution similar to what Jasmine , Mocha and Chai offer.
+
+Jest is a test runner that runs all our test suites and test cases.
+
+We can run Jest in watch mode, which can run our tests every time we save the file.
+
+
+Project Structure
+==================
+myapp17
+|
+|-----public
+|	|
+	|----favicon.ico
+	|----index.html
+	|----manifest.json
+|
+|-----src
+|	|
+	|------App.js
+	|
+	|------components(folder)
+		|
+		|------button(folder)
+			|
+			|------Button.js
+			|------Button.css
+			|
+			|------__test__ (folder)
+				|
+				|----Button.test.js
+		
+|
+|---package.json
+|
+|---package-lock.json
+|
+|
+
+
+step1:
+------
+	create myapp17 react project in VSC Editor.
+	ex:
+		reactprojects> create-react-app  myapp16
+
+step2:
+------
+	Move to myapp17 project.
+	ex:
+		reactprojects>cd myapp17
+
+
+step3:
+----
+	Install React Test library and Jest.
+	ex:
+	reactprojects/myapp17>
+	npm install @testing-library/react react-test-renderer @testing-library/jest-dom --save-dev
+
+
+step4:
+------
+	create App.js file.
+App.js
+----------
+import logo from './logo.svg';
+import './App.css';
+import Button from './components/button/Button.js';
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <Button label="click me please"></Button>
+      </header>
+    </div>
+  );
+}
+
+export default App;
+
+step5:
+---------
+	create Button.js/Button.css component inside "src/components/button" folder.
+	
+Button.js
+-----------
+import './Button.css';
+
+function Button({label})
+{
+        return <div data-testid="button" className="button-style">{label}</div>
+}
+export default Button;
+
+Button.css
+-------------
+.button-style
+{
+    border:2px solid black;
+    padding:10px;
+    width:150px;
+}
+
+step6:
+------
+	Run myapp17 react project.
+	reactprojects/myapp19>npm start.
+
+step7:
+---------
+	create Button.test.js inside "components/__test__/" folder.
+
+Button.test.js
+----------------
+import { render, cleanup} from '@testing-library/react';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Button from './../Button';
+import '@testing-library/jest-dom/extend-expect';
+import renderer from 'react-test-renderer';
+
+afterEach(cleanup);
+
+it("renders without crashing",()=>{
+    const div=document.createElement("div");
+    ReactDOM.render(<Button></Button>,div);
+})
+
+it("render button correctly",()=>
+{
+    const {getByTestId}=render(<Button label="click me please"></Button>)
+    expect(getByTestId('button')).toHaveTextContent("click me please");
+})
+
+
+it("render button correctly",()=>
+{
+    const {getByTestId}=render(<Button label="save"></Button>)
+    expect(getByTestId('button')).toHaveTextContent("save");
+})
+
+
+it("matches snapshort",()=>
+{
+    const tree=renderer.create(<Button label="save"></Button>).toJSON;
+    expect(tree).toMatchSnapshot();
+});
+
+
+step8:
+--------
+	Run the test by using below command.
+	ex:
+	reactprojects/myapp17>	npm test
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
