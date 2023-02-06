@@ -1,0 +1,6 @@
+{"users":[{"id":2,"email":"test@gmail.com","password":"123456"},
+{"email":"test@gmail.com","password":"123456","id":3},
+{"email":"javeed@gmail.com","password":"javeed123","id":4},
+{"id":5,"email":"tom@gmail.com","password":"tom123"},
+{"id":6,"email":"tina@gmail.com","password":"tina123"},
+{"id":7,"email":"nikhil@gmail.com","password":"nikhil123"}]}
