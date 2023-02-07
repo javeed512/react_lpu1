@@ -1,0 +1,289 @@
+
+ReactJS + NodeJS + MYSQL database Integration
+===============================================
+
+project structure
+-------------------
+myapp19
+|
+|----node_modules
+|
+|----public
+|	|
+	|---favicon.ico
+	|---index.html
+	|---manifest.json
+
+|-----src
+|	|
+|	|---index.js
+|	|---App.js
+	|---Form.js
+	|---server.js
+|
+|
+
+step1:
+------
+	create  myapp19 react project in VSC.
+	ex:
+	projects>create-react-app myapp19
+
+
+step2:
+------
+	Move to myapp19 project.
+	ex:
+	projects> cd myapp19
+
+step3:
+-----
+	Install bootstrap and axios package.
+	ex:
+	projects/myapp19> npm install react-bootstrap bootstrap
+	projects/myapp19> npm install axios
+step4:
+----
+	create Form.js component using bootstrap classes inside src folder.
+
+Form.js
+----------
+import React, { Component } from 'react'
+import axios from 'axios';
+export default class  extends Component {
+    
+    constructor(props)
+    {
+        super(props);
+
+        this.state={
+            empId:"",
+            empName:"",
+            empSal:""
+        }
+    }
+
+    handleChange=(e)=>
+    {
+        this.setState({[e.target.name]:e.target.value});
+    }
+
+    handleSubmit= (e)=>
+    {
+            e.preventDefault();
+            //axios to post the data
+            axios.post("http://localhost:3001/create",this.state)
+            .then(()=>
+            {
+                console.log("success");
+            });
+            this.setState({empId:"",empName:"",empSal:""});
+    }
+
+  render() {
+    const {empId,empName,empSal}= this.state;
+    return (
+       
+      <div className='container mt-5'>
+          
+          <div className="row">
+          
+          <div className="col-sm-8">
+          <h2 className='text-center text-decoration-underline'>Enter Employee Details</h2>   
+          <form onSubmit={this.handleSubmit}>
+              <label htmlFor='empId' className='mt-3'>Employee Id:</label>
+                  <input type="text" name="empId" className='form-control'
+                  value={empId}
+                  onChange={this.handleChange}/>
+
+              <label htmlFor='empName' className='mt-3'>Employee Name:</label>
+                  <input type="text" name="empName" className='form-control'
+                  value={empName}
+                  onChange={this.handleChange}/>
+              
+              <label htmlFor='empSal' className='mt-3'>Employee Sal:</label>
+                  <input type="text" name="empSal" className='form-control'
+                  value={empSal}
+                  onChange={this.handleChange}/>
+              
+              
+              <button type="submit" className='btn btn-primary w-100 mt-3'>submit</button>
+          </form>
+          </div>
+          </div>
+      </div>
+    )
+  }
+}
+
+
+
+step5:
+-------
+	run react myapp19 project by using below command.
+	ex:
+	projects/myapp19>npm start
+
+
+step6:
+------
+	Check the output in below url.
+	ex:
+		http://localhost:3000/
+	
+
+step7:
+-------
+	Download and Install MySQL database.
+	ex:
+	download link:
+	http://www.mediafire.com/file/4t409s2w52smivb/MySQ-64-Bit-5.5.13.zip/file
+
+
+step8:
+------
+	Open and Connect with MySQL database.
+
+	mysql> Enter the password : root
+
+
+step9:
+-------
+	Create a schema in MySQL database.
+	ex:
+		mysql>create schema ih_react_003
+
+		->automatically ih_react_003 database will be created.
+
+step10:
+-------
+	Switch to ih_react_003 Database
+	ex:
+		mysql> use ih_react_003
+
+		->automatically we are able to move in ng6pm.
+
+
+step11: 
+-------
+	Now create employes table.
+
+	ex:
+	create table employees(empId integer,empName varchar(20),empSal integer);
+	
+	select * from employees;
+
+Note:
+--------
+
+	Database Credentials
+	---------------------
+	host: localhost
+	user: root
+	password: root
+	database : ih_react_003
+	table: employees
+
+
+step12:
+-------
+	Install mysql , express and body-parser modules and cors by using below url.
+	ex:
+	projects/myapp19>npm install mysql
+	projects/myapp20>npm install express
+	projects/myapp20>npm install body-parser
+	projects/myapp20>npm install cors	
+
+step13:
+-----
+	Create server.js file inside "src" folder.
+ex:
+
+server.js
+------------
+var mysql=require('mysql');
+const express = require("express");
+const bodyParser = require('body-parser');
+const cors = require("cors");
+ 
+const app = express();
+ 
+app.use(cors());
+// parse application/json
+app.use(bodyParser.json());
+
+//const { default: App } = require('./App');
+
+var db=mysql.createConnection({
+    host:"localhost",
+    user:"root",
+    password:"root",
+    database:"ih_react_003"
+})
+app.post("/create",(req,res)=>{
+    const empId=req.body.empId;
+    const empName=req.body.empName;
+    const empSal=req.body.empSal;
+
+    db.query("insert into employees (empId,empName,empSal) values(?,?,?)",
+    [empId,empName,empSal],(err,result)=>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.send("Record Inserted");
+        }
+    });
+});
+app.listen(3001, () => {
+  console.log("Server running successfully on 3001");
+});
+
+Note:
+------
+	Here React is running under 3000 port number.
+	Here NodeJS is running under 3001 port number.
+
+step14:
+-------
+	Now run node server by using below command.
+	ex:
+	myapp19> node  ./src/server.js
+
+	Note: We need to pass the location of node server file 
+	
+
+step17:
+---------
+	Now insert the data into the form then click submit button.
+
+step18:
+---------
+	Check the database to see record inserted or not.
+	ex:
+	mysql> select * from employees;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+
+
