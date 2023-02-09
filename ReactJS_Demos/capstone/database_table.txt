@@ -1,0 +1,13 @@
+create database testdb;
+
+use testdb;
+
+
+create table tutorials(id integer  primary key auto_increment,title varchar(30),description varchar(30), published boolean);
+
+
+
+desc tutorials;
+
+
+select * from tutorials;
